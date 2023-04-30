@@ -1,0 +1,76 @@
+﻿@using Web_CuaHangCafe.Models
+@using X.PagedList.Mvc.Core;
+@model X.PagedList.IPagedList<TbPhanHoi>
+@addTagHelper *, Microsoft.AspNetCore.Mvc.TagHelpers
+
+@{
+    ViewData["Title"] = "Tiếp nhận phản hồi";
+    ViewData["Feedback"] = "active";
+    Layout = "~/Areas/Admin/Views/Shared/_LayoutAdmin.cshtml";
+}
+
+<div class="container" style="margin-bottom:20px;">
+    <div class="row">
+        <div class="col-lg-8 col-md-12 col-sm-12">
+            <div class="page-header">
+                <h3 class="page-title">Tiếp nhận phản hồi</h3>
+            </div>
+        </div>
+        <div class="col-lg-4 col-md-12 col-sm-12">
+            <div class="search-field">
+                @using (Html.BeginForm("Search", "Feedback", FormMethod.Get))
+                {
+                    <div class="input-group">
+                        <input type="text" class="form-control" name="search" style="border:none" placeholder="Tìm kiếm" autocomplete="off">
+                        <button class="btn" type="submit"><i class="fa fa-search" aria-hidden="true"></i></button>
+                    </div>
+                }
+            </div>
+        </div>
+    </div>
+</div>
+
+<div class="container">
+    <div class="row">
+        <p id="status-message">@TempData["Message"]</p>
+        <div class="table-responsive">
+            <table class="table">
+                <thead>
+                    <tr>
+                        <th>Mã phản hồi</th>
+                        <th>Tiêu đề</th>
+                        <th>Số điện thoại</th>
+                        <th>Thao tác</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    @foreach (var item in Model)
+                    {
+                        <tr>
+                            <td>
+                                @Html.DisplayFor(modelItem => item.MaPhanHoi)
+                            </td>
+                            <td>
+                                @Html.DisplayFor(modelItem => item.TieuDe)
+                            </td>
+                            <td>
+                                @Html.DisplayFor(modelItem => item.SoDienThoai)
+                            </td>
+                            <td>
+                                <a class="btn btn-primary btn-sm" asp-action="Details" asp-route-id="@item.MaPhanHoi" asp-route-name="@item.TieuDe">Xem</a>
+                                <a class="btn btn-danger btn-sm" asp-action="Delete" asp-route-id="@item.MaPhanHoi">Xoá</a>
+                            </td>
+                        </tr>
+                    }
+                </tbody>
+            </table>
+        </div>
+    </div>
+
+    @Html.PagedListPager(Model, page=>Url.Action("index", new {page = page}), new X.PagedList.Web.Common.PagedListRenderOptions()
+    {
+        MaximumPageNumbersToDisplay = 5,
+        LiElementClasses = new List<String> {"page-item"},
+        PageClasses = new List<String> {"page-link"}
+    })
+</div>

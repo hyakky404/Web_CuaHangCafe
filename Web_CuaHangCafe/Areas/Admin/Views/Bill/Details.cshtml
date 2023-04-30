@@ -1,0 +1,75 @@
+﻿@using Web_CuaHangCafe.Models
+@using X.PagedList.Mvc.Core;
+@model X.PagedList.IPagedList<TbChiTietHoaDonBan>
+@addTagHelper *, Microsoft.AspNetCore.Mvc.TagHelpers
+
+@{
+    ViewData["Title"] = "Details";
+    ViewData["Bill"] = "active";
+    Layout = "~/Areas/Admin/Views/Shared/_LayoutAdmin.cshtml";
+}
+
+<div class="container" style="margin-bottom:20px;">
+    <div class="row">
+        <div class="col-lg-8 col-md-12 col-sm-12">
+            <div class="page-header">
+                <h3 class="page-title">Chi tiết hoá đơn bán: <span style="color:#666;text-transform:capitalize;">@ViewBag.name</span></h3>
+            </div>
+        </div>
+    </div>
+</div>
+
+<div class="container">
+    <div class="row">
+        <div class="table-responsive">
+            <table class="table">
+                <thead>
+                    <tr>
+                        <th>Mã hoá đơn</th>
+                        <th>Mã sản phẩm</th>
+                        <th>Giá bán</th>
+                        <th>Giảm giá</th>
+                        <th>Số lượng</th>
+                        <th>Thành tiền</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    @foreach (var item in Model)
+                    {
+                        <tr>
+                            <td>
+                                @Html.DisplayFor(modelItem => item.MaHoaDon)
+                            </td>
+                            <td>
+                                @Html.DisplayFor(modelItem => item.MaSanPham)
+                            </td>
+                            <td>
+                                @Html.DisplayFor(modelItem => item.GiaBan)
+                            </td>
+                            <td>
+                                @Html.DisplayFor(modelItem => item.GiamGia)
+                            </td>
+                            <td>
+                                @Html.DisplayFor(modelItem => item.SoLuong)
+                            </td>
+                            <td>
+                                @Html.DisplayFor(modelItem => item.ThanhTien) &#8363;
+                            </td>
+                        </tr>
+                    }
+                </tbody>
+            </table>
+        </div>
+    </div>
+
+    @Html.PagedListPager(Model, page=>Url.Action("Details", new {page = page}), new X.PagedList.Web.Common.PagedListRenderOptions()
+    {
+        MaximumPageNumbersToDisplay = 5,
+        LiElementClasses = new List<String> {"page-item"},
+        PageClasses = new List<String> {"page-link"}
+    })
+</div>
+
+<div>
+    <a asp-action="Index">Quay về</a>
+</div>

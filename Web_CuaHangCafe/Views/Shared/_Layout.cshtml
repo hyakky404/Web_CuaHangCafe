@@ -1,0 +1,154 @@
+﻿<!DOCTYPE html>
+<html lang="vi">
+<head>
+    <meta charset="UTF-8">
+    <meta name="description" content="The Space Coffee">
+    <meta name="keywords" content="coffee, cafe">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>@ViewData["Title"] | THE SPACE COFFEE</title>
+    <link rel="shortcut icon" href="~/favicon.ico"/>
+
+    <!--Google Fonts-->
+    <link href="https://fonts.googleapis.com/css2?family=Cookie&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;500;600;700;800;900&display=swap" rel="stylesheet">
+
+    <!--CSS Styles-->
+    <link rel="stylesheet" href="~/lib/bootstrap/dist/css/bootstrap.css" type="text/css">
+    <link rel="stylesheet" href="~/css/font-awesome.min.css" type="text/css">
+    <link rel="stylesheet" href="~/css/elegant-icons.css" type="text/css">
+    <link rel="stylesheet" href="~/css/jquery-ui.min.css" type="text/css">
+    <link rel="stylesheet" href="~/css/magnific-popup.css" type="text/css">
+    <link rel="stylesheet" href="~/css/owl.carousel.min.css" type="text/css">
+    <link rel="stylesheet" href="~/css/slicknav.min.css" type="text/css">
+    <link rel="stylesheet" href="~/css/style.css" type="text/css">
+
+    <style>
+        #btnTop {
+            display: inline-block;
+            background-color: #0d0d0d;
+            color: #ffffff;
+            width: 50px;
+            height: 50px;
+            text-align: center;
+            border-radius: 50%;
+            border: none;
+            position: fixed;
+            bottom: 30px;
+            right: 30px;
+            transition: background-color .3s, opacity .5s, visibility .5s;
+            opacity: 0;
+            visibility: hidden;
+            z-index: 1000;
+        }
+
+            #btnTop:hover {
+                cursor: pointer;
+                background-color: #333;
+            }
+
+            #btnTop:active {
+                background-color: #555;
+            }
+
+            #btnTop.show {
+                opacity: 1;
+                visibility: visible;
+            }
+    </style>
+</head>
+<body>
+    <!--Page Preloder-->
+    <div id="preloder">
+        <div class="loader"></div>
+    </div>
+
+    <!--Offcanvas Menu Begin-->
+    <div class="offcanvas-menu-overlay"></div>
+
+    <div class="offcanvas-menu-wrapper">
+        <div class="offcanvas__close">+</div>
+
+        <ul class="offcanvas__widget">
+            <li><span class="icon_search search-switch"></span></li>
+            <li>
+                <a href="#">
+                    <span class="icon_bag_alt"></span>
+                </a>
+            </li>
+        </ul>
+
+        <div class="offcanvas__logo">
+            <a a asp-controller="Home" asp-action="Index"><i class="fa fa-coffee" aria-hidden="true"></i> The Space Coffee</a>
+        </div>
+
+        <div id="mobile-menu-wrap"></div>
+    </div>
+    <!--Offcanvas Menu End-->
+
+    <!--Header Section Begin-->
+    @await Html.PartialAsync("_PartialHeader")
+    <!--Header Section End-->
+
+    <!--Main Body Begin-->
+    @RenderBody()
+    <!--Main Body End-->
+
+    <!--Instagram Begin-->
+    @await Html.PartialAsync("_PartialInstagram")
+    <!--Instagram End-->
+
+    <!--Footer Section Begin-->
+    @await Html.PartialAsync("_PartialFooter")
+    <!--Footer Section End-->
+
+    <!--Search Begin-->
+    <div class="search-model">
+        <div class="h-100 d-flex align-items-center justify-content-center">
+            <div class="search-close-switch">+</div>
+            @using (Html.BeginForm("Index", "Search", FormMethod.Get))
+            {
+                <div class="search-model-form">
+                    <input type="text" id="search-input" name="search" placeholder="Tìm kiếm sản phẩm" autocomplete="off">
+                </div>
+            }
+        </div>
+    </div>
+    <!--Search End-->
+
+    <!--Back to top Begin-->
+    <button id="btnTop" title="Lên đầu trang"><i class="fa fa-arrow-up" aria-hidden="true"></i></button>
+    <!--Back to top End-->
+
+    <script>
+        var btn = $('#btnTop');
+
+        $(window).scroll(function () {
+            if ($(window).scrollTop() > 300) {
+                btn.addClass('show');
+            } else {
+                btn.removeClass('show');
+            }
+        });
+
+        btn.on('click', function (e) {
+            e.preventDefault();
+            $('html, body').animate({ scrollTop: 0 }, '300');
+        });
+    </script>
+
+    <!--JS Plugins-->
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.4/jquery.min.js"></script>
+    <script src="~/lib/jquery/dist/jquery.js"></script>
+    <script src="~/lib/bootstrap/dist/js/bootstrap.js"></script>
+    <script src="~/js/jquery.magnific-popup.min.js"></script>
+    <script src="~/js/jquery-ui.min.js"></script>
+    <script src="~/js/mixitup.min.js"></script>
+    <script src="~/js/jquery.countdown.min.js"></script>
+    <script src="~/js/jquery.slicknav.js"></script>
+    <script src="~/js/owl.carousel.min.js"></script>
+    <script src="~/js/jquery.nicescroll.min.js"></script>
+    <script src="~/js/main.js"></script>
+    @RenderSection("scripts", required: false)
+</body>
+</html>

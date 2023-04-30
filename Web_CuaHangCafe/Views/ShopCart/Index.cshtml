@@ -1,0 +1,77 @@
+﻿@model IEnumerable<CartItem>
+
+@{
+    ViewData["Title"] = "Giỏ hàng";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<!-- Breadcrumb Begin -->
+<div class="breadcrumb-option">
+    <div class="container">
+        <div class="row">
+            <div class="col-lg-12">
+                <div class="breadcrumb__links">
+                    <a asp-controller="Home" asp-action="Index"><i class="fa fa-home"></i> Trang chủ</a>
+                    <span>Giỏ hàng</span>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+<!-- Breadcrumb End -->
+<!-- Shop Cart Section Begin -->
+<section class="shop-cart spad">
+    <div class="container">
+        <div class="row">
+            <div class="col-lg-12">
+                <div class="shop__cart__table">
+                    <table>
+                        <thead>
+                            <tr>
+                                <th>Sản phẩm</th>
+                                <th>Giá</th>
+                                <th>Số lượng</th>
+                                <th>Tổng</th>
+                                <th></th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            @foreach(var item in Model)
+                            {
+                                <tr>
+                                    <td class="cart__product__item">
+                                        <img src=@Url.Content("../img/products/" + item.AnhSp) alt="">
+                                        <div class="cart__product__item__title">
+                                            <h6>@item.TenSp</h6>
+                                        </div>
+                                    </td>
+                                    <td class="cart__price">@item.DonGia.Value.ToString("n0") &#8363;</td>
+                                    <td class="cart__quantity">
+                                        <div class="pro-qty">
+                                            <input type="text" value="@item.SoLuong">
+                                        </div>
+                                    </td>
+                                    <td class="cart__total">@item.ThanhTien.Value.ToString("n0") &#8363;</td>
+                                </tr>
+                            }
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </div>
+        <div class="row">
+            <div class="col-lg-6"></div>
+            <div class="col-lg-4 offset-lg-2">
+                <div class="cart__total__procced">
+                    <h6>Tổng tiền</h6>
+                    <ul>
+                        <li>Tổng <span>@ViewData["total"]</span></li>
+                    </ul>
+                    <a href="#" class="primary-btn">Thanh toán</a>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+<!-- Shop Cart Section End -->
+

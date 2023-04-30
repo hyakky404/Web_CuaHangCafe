@@ -1,0 +1,80 @@
+﻿@using Web_CuaHangCafe.Models
+@using X.PagedList.Mvc.Core
+@model X.PagedList.IPagedList<TbTinTuc>
+@addTagHelper *, Microsoft.AspNetCore.Mvc.TagHelpers
+
+@{
+    ViewData["Title"] = "Kết quả tìm kiếm";
+    ViewData["NewsManage"] = "active";
+    Layout = "~/Areas/Admin/Views/Shared/_LayoutAdmin.cshtml";
+}
+
+<div class="container" style="margin-bottom:20px;">
+    <div class="row">
+        <div class="col-lg-8 col-md-12 col-sm-12">
+            <div class="page-header">
+                <h3 class="page-title">Kết quả tìm kiếm: <span style="color:#666;text-transform:capitalize;">@ViewBag.search</span></h3>
+            </div>
+        </div>
+        <div class="col-lg-4 col-md-12 col-sm-12">
+            <div class="search-field">
+                @using (Html.BeginForm("Search", "NewsManage", FormMethod.Get))
+                {
+                    <div class="input-group">
+                        <input type="text" class="form-control" name="search" style="border:none" placeholder="Tìm kiếm">
+                        <button class="btn" type="submit"><i class="fa fa-search" aria-hidden="true"></i></button>
+                    </div>
+                }
+            </div>
+        </div>
+    </div>
+</div>
+
+<div class="container">
+    <div class="row">
+        <div class="table-responsive">
+            <table class="table">
+                <thead>
+                    <tr>
+                        <th>Mã tin tức</th>
+                        <th>Tiêu đề</th>
+                        <th>Ngày đăng</th>
+                        <th>Người đăng</th>
+                        <th>Thao tác</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    @foreach (var item in Model)
+                    {
+                        <tr>
+                            <td>
+                                @Html.DisplayFor(modelItem => item.MaTinTuc)
+                            </td>
+                            <td>
+                                @Html.DisplayFor(modelItem => item.TieuDe)
+                            </td>
+                            <td>
+                                @Html.DisplayFor(modelItem => item.NgayDang)
+                            </td>
+                            <td>
+                                @Html.DisplayFor(modelItem => item.TenNguoiDung)
+                            </td>
+                            <td>
+                                <button class="btn btn-primary btn-sm" asp-action="Details" asp-route-id="@item.MaTinTuc">Chi tiết</button>
+                                <button class="btn btn-success btn-sm" asp-action="Edit" asp-route-id="@item.MaTinTuc">Sửa</button>
+                                <button class="btn btn-danger btn-sm" asp-action="Delete" asp-route-id="@item.MaTinTuc">Xoá</button>
+                            </td>
+                        </tr>
+                    }
+                </tbody>
+            </table>
+        </div>
+    </div>
+
+    @Html.PagedListPager(Model, page=>Url.Action("search", new {page = page, search = ViewBag.search}), new X.PagedList.Web.Common.PagedListRenderOptions()
+    {
+        MaximumPageNumbersToDisplay = 5,
+        LiElementClasses = new List<String> {"page-item"},
+        PageClasses = new List<String> {"page-link"}
+    })
+</div>

@@ -1,0 +1,155 @@
+﻿@addTagHelper *, Microsoft.AspNetCore.Mvc.TagHelpers
+
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+    <!-- Required meta tags -->
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    <title>@ViewData["Title"] | Trang quản trị THE SPACE COFFEE</title>
+
+    <!--Google Fonts-->
+    <link href="https://fonts.googleapis.com/css2?family=Cookie&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;500;600;700;800;900&display=swap" rel="stylesheet">
+
+    <!-- Layout styles -->
+    <link rel="stylesheet" href="~/css/style-admin.css" type="text/css">
+    <link rel="stylesheet" href="~/css/font-awesome.min.css" type="text/css">
+    <link rel="stylesheet" href="~/lib/bootstrap/dist/css/bootstrap.css" type="text/css"/>
+    <!-- End layout styles -->
+    <link rel="shortcut icon" href="~/favicon.ico" />
+
+    <style>
+        .admin__logo {
+            font-family: "Montserrat", sans-serif;
+            display: inline-block;
+            text-transform: uppercase;
+            font-size: 21px;
+            color: #000;
+            font-weight: 500;
+            user-select: none;
+            text-decoration: none;
+        }
+
+        .admin__logo:hover {
+            color: #000;
+        }
+    </style>
+</head>
+<body>
+    <div class="container-scroller">
+        <!-- partial:partials/_navbar.html -->
+        <nav class="navbar default-layout-navbar col-lg-12 col-12 p-0 fixed-top d-flex flex-row">
+            <div class="text-center navbar-brand-wrapper d-flex align-items-center justify-content-center">
+                <a class="admin__logo" asp-controller="homeadmin" asp-action="index"><i class="fa fa-coffee" aria-hidden="true"></i> | Admin</a>
+            </div>
+            <div class="navbar-menu-wrapper d-flex align-items-stretch">
+                <ul class="navbar-nav navbar-nav-right">
+                    <li class="nav-item nav-item-logout">
+                        <a asp-controller="Access" asp-action="Logout" class="nav-link">
+                            <i class="fa fa-sign-out menu-icon" aria-hidden="true"></i>
+                            <span class="menu-title" style="padding-left:10px;">Đăng xuất</span>
+                        </a>
+                    </li>
+                </ul>
+                <button class="navbar-toggler navbar-toggler-right d-lg-none align-self-center" onclick="openNavbar()">
+                    <i class="fa fa-bars" aria-hidden="true"></i>
+                </button>
+            </div>
+        </nav>
+
+        <!-- partial -->
+        <div class="container-fluid page-body-wrapper" style="padding-left:0;padding-right:0;">
+            <!-- partial:partials/_sidebar.html -->
+            <nav class="sidebar sidebar-offcanvas" id="sidebar">
+                <ul class="nav nav-bar-fixed">
+                    <li class="nav-item @ViewData["ListProducts"]">
+                        <a asp-controller="HomeAdmin" asp-action="Index" class="nav-link">
+                            <i class="fa fa-list menu-icon" aria-hidden="true"></i>
+                            <span class="menu-title">Quản lí sản phẩm</span>
+                        </a>
+                    </li>
+                    <li class="nav-item @ViewData["GroupsProduct"]">
+                        <a asp-controller="GroupsProduct" asp-action="Index" class="nav-link">
+                            <i class="fa fa-table menu-icon" aria-hidden="true"></i>
+                            <span class="menu-title">Quản lí nhóm sản phẩm</span>
+                        </a>
+                    </li>
+                    <li class="nav-item @ViewData["Bill"]">
+                        <a asp-controller="Bill" asp-action="Index" class="nav-link">
+                            <i class="fa fa-file-text menu-icon" aria-hidden="true"></i>
+                            <span class="menu-title">Quản lí hoá đơn</span>
+                        </a>
+                    </li>
+                    <li class="nav-item @ViewData["Clients"]">
+                        <a asp-controller="Clients" asp-action="Index" class="nav-link">
+                            <i class="fa fa-user menu-icon" aria-hidden="true"></i>
+                            <span class="menu-title">Quản lí khách hàng</span>
+                        </a>
+                    </li>
+                    <li class="nav-item @ViewData["NewsManage"]">
+                        <a asp-controller="NewsManage" asp-action="Index" class="nav-link">
+                            <i class="fa fa-file-text menu-icon" aria-hidden="true"></i>
+                            <span class="menu-title">Quản lí bài viết</span>
+                        </a>
+                    </li>
+                    <li class="nav-item @ViewData["Feedback"]">
+                        <a asp-controller="Feedback" asp-action="Index" class="nav-link">
+                            <i class="fa fa-comment menu-icon" aria-hidden="true"></i>
+                            <span class="menu-title">Tiếp nhận phản hồi</span>
+                        </a>
+                    </li>
+                    <li class="nav-item">
+                        <a asp-controller="Access" asp-action="Logout" class="nav-link">
+                            <i class="fa fa-sign-out menu-icon" aria-hidden="true"></i>
+                            <span class="menu-title">Đăng xuất</span>
+                        </a>
+                    </li>
+                </ul>
+            </nav>
+            <!-- partial -->
+
+            <div class="main-panel">
+                <div class="content-wrapper">
+                    <div class="row">
+                        @RenderBody()
+                    </div>
+                </div>
+                <!-- content-wrapper ends -->
+                <!-- partial:partials/_footer.html -->
+                <footer class="footer">
+                    <div class="container-fluid">
+                        <div class="row">
+                            <span class="copyright_text">Bản quyền &copy;
+                                <script>document.write(new Date().getFullYear());</script>.
+                                <a asp-controller="home" asp-action="index">THE SPACE COFFEE</a>
+                            </span>
+                        </div>
+                    </div>
+                </footer>
+                <!-- partial -->
+            </div>
+            <!-- main-panel ends -->
+        </div>
+        <!-- page-body-wrapper ends -->
+    </div>
+    <!-- container-scroller -->
+
+    <!--JS Begin-->
+    <script>
+        function openNavbar() {
+            var x = document.getElementById("sidebar");
+            if (x.className === "sidebar sidebar-offcanvas") {
+                x.className += " active";
+            } else {
+                x.className = "sidebar sidebar-offcanvas";
+            }
+        }
+    </script>
+    <script src="../vendors/js/vendor.bundle.base.js"></script>
+    <script src="../js/off-canvas.js"></script>
+    <script src="../js/hoverable-collapse.js"></script>
+    <script src="../js/misc.js"></script>
+    <!--JS End-->
+</body>
+</html>

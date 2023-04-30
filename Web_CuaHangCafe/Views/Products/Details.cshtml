@@ -1,0 +1,81 @@
+﻿@model Web_CuaHangCafe.Models.TbSanPham
+
+@{
+    ViewData["Title"] = @Html.DisplayFor(model => model.TenSanPham);
+    ViewData["Products"] = "active";
+    ViewData["Quantity"] = 1;
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<!--Breadcrumb Begin-->
+<div class="breadcrumb-option">
+    <div class="container">
+        <div class="row">
+            <div class="col-lg-12">
+                <div class="breadcrumb__links">
+                    <a asp-controller="home" asp-action="index"><i class="fa fa-home"></i> Trang chủ</a>
+                    <a asp-controller="products" asp-action="index" asp-route-target="all" asp-route-targetname="Tất cả">Sản phẩm </a>
+                    <span>@Html.DisplayFor(model => model.TenSanPham)</span>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+<!--Breadcrumb End-->
+
+<!--Product Details Section Begin-->
+<section class="product-details spad">
+    <div class="container">
+        <div class="row">
+            <div class="col-lg-6">
+                <div class="product__details__pic">
+                    <div class="product__details__slider__content">
+                        <div class="product__details__pic__slider owl-carousel">
+                            <img data-hash="product-1" class="product__big__img" src=@Url.Content("../img/products/" + Model.HinhAnh) alt="">
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="col-lg-6">
+                <div class="product__details__text">
+                    <h3>@Html.DisplayFor(model => model.TenSanPham)</h3>
+                    <div class="product__details__price">@Model.GiaBan.Value.ToString("n0") &#8363;</div>
+                    <div class="product__details__button">
+                        <form id="myForm">
+                            <div class="quantity">
+                                <span>Số lượng:</span>
+                                <div class="pro-qty">
+                                    <input type="number" name="quantity">
+                                </div>
+                            </div>
+                            <button asp-controller="shopcart" asp-action="addtocart" asp-route-id="@Model.MaSanPham" type="submit" class="cart-btn" onclick="submitForm()"><span class="icon_bag_alt"></span> Thêm vào giỏ</button>
+                        </form>
+                    </div>
+                    <div class="product__details__widget">
+                        <ul>
+                            <li>
+                                <span>Mã sản phẩm:</span>
+                                <p>@Html.DisplayFor(model => model.MaSanPham)</p>
+                            </li>
+                            <li>
+                                <span>Mô tả:</span>
+                                <p>@Html.DisplayFor(model => model.MoTa)</p>
+                            </li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+<!--Product Details Section End-->
+
+<script>
+    function submitForm() {
+        var form = document.getElementById("myForm");
+        var formData = new FormData(form);
+        var xhr = new XMLHttpRequest();
+        xhr.open("POST", "/submit-form");
+        xhr.send(formData);
+    }
+</script>

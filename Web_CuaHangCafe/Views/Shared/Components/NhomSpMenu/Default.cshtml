@@ -1,0 +1,16 @@
+﻿@model IEnumerable<TbNhomSanPham>
+
+<div class="categories__accordion">
+    <div class="accordion" id="accordionExample">
+        <div class="card">
+            <div class="card-heading"><a asp-controller="products" asp-action="index" asp-route-target="all" asp-route-targetname="Tất cả">Tất cả</a></div>
+        </div>
+
+        @foreach (var item in Model)
+        {
+            <div class="card">
+                <div class="card-heading"><a asp-controller="products" asp-action="index" asp-route-target="@item.MaNhomSp" asp-route-targetname="@item.TenNhomSp">@item.TenNhomSp</a></div>
+            </div>
+        }
+    </div>
+</div>

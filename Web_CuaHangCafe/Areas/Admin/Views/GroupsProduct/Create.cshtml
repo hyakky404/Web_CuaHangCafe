@@ -1,0 +1,45 @@
+﻿@model Web_CuaHangCafe.Models.TbNhomSanPham
+@addTagHelper *, Microsoft.AspNetCore.Mvc.TagHelpers
+
+@{
+    ViewData["Title"] = "Thêm nhóm sản phẩm";
+    ViewData["GroupsProduct"] = "active";
+    Layout = "~/Areas/Admin/Views/Shared/_LayoutAdmin.cshtml";
+}
+
+<div class="container" style="margin-bottom:20px;">
+    <div class="row">
+        <div class="col-lg-8 col-md-12 col-sm-12">
+            <div class="page-header">
+                <h3 class="page-title">Thêm nhóm sản phẩm</h3>
+            </div>
+        </div>
+    </div>
+</div>
+
+<hr />
+<div class="row">
+    <div class="col-md-4">
+        <form asp-action="Create">
+            <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+            <div class="form-group">
+                <label class="control-label">Mã nhóm sản phẩm</label>
+                <input asp-for="MaNhomSp" class="form-control" />
+                <span asp-validation-for="MaNhomSp" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label class="control-label">Tiêu đề</label>
+                <input asp-for="TenNhomSp" class="form-control" />
+                <span asp-validation-for="TenNhomSp" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <input type="submit" value="Thêm" class="btn btn-primary" />
+            </div>
+        </form>
+    </div>
+</div>
+
+<div>
+    <a asp-action="Index">Quay về</a>
+</div>
+

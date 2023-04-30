@@ -1,0 +1,166 @@
+﻿
+@{
+    ViewData["Title"] = "Trang chủ";
+    ViewData["Home"] = "active";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+@model Web_CuaHangCafe.MergeData.MergeModel
+
+<!--Categories Section Begin-->
+<section class="categories">
+    <div class="container-fluid">
+        <div class="row">
+            <div class="col-lg-6 p-0">
+                <div class="categories__item categories__large__item set-bg"
+                     data-setbg="../img/categories/category-1.jpg">
+                    <div class="categories__text">
+                        <h1>Thưởng thức cà phê</h1>
+                        <p>Nơi cuộc hẹn tròn đầy với cà phê, món ăn nhẹ và không gian cảm hứng.</p>
+                        <a asp-controller="products" asp-action="index" asp-route-target="all" asp-route-targetname="Tất cả">Xem ngay</a>
+                    </div>
+                </div>
+            </div>
+            <div class="col-lg-6">
+                <div class="row">
+                    <div class="col-lg-6 col-md-6 col-sm-6 p-0">
+                        <div class="categories__item set-bg" data-setbg="../img/categories/category-2.jpg">
+                            <div class="categories__text">
+                                <h4>Trà</h4>
+                                <p>Không chỉ có cà phê</p>
+                                <a asp-controller="products" asp-action="index" asp-route-target="TR" asp-route-targetname="Trà">Xem ngay</a>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-lg-6 col-md-6 col-sm-6 p-0">
+                        <div class="categories__item set-bg" data-setbg="../img/categories/category-3.jpg">
+                            <div class="categories__text">
+                                <h4>Tin tức</h4>
+                                <p>Cập nhật tin tức mới nhất từ chúng tôi</p>
+                                <a asp-controller="news" asp-action="index">Xem ngay</a>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-lg-6 col-md-6 col-sm-6 p-0">
+                        <div class="categories__item set-bg" data-setbg="../img/categories/category-4.jpg">
+                            <div class="categories__text">
+                                <h4>Giới thiệu</h4>
+                                <p>Chúng tôi là ai</p>
+                                <a asp-controller="about" asp-action="index">Xem ngay</a>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-lg-6 col-md-6 col-sm-6 p-0">
+                        <div class="categories__item set-bg" data-setbg="../img/categories/category-5.jpg">
+                            <div class="categories__text">
+                                <h4>Liên hệ</h4>
+                                <p>Bạn muốn nhắn gì với chúng tôi</p>
+                                <a asp-controller="contact" asp-action="index">Xem ngay</a>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+<!--Categories Section End-->
+
+<!--Product Section Begin-->
+<section class="product spad">
+    <div class="container">
+        <div class="row">
+            <div class="col-lg-4 col-md-4">
+                <div class="section-title">
+                    <h4>Sản phẩm nổi bật</h4>
+                </div>
+            </div>
+        </div>
+        <div class="row property__gallery">
+            @foreach (var item in Model.lstSanPham)
+            {
+                <div class="col-lg-3 col-md-4 col-sm-6 mix women">
+                    <div class="product__item">
+                        <div class="product__item__pic set-bg" data-setbg=@Url.Content("../img/products/" + item.HinhAnh)>
+                            <ul class="product__hover">
+                                <li><a href=@Url.Content("../img/products/" + item.HinhAnh) class="image-popup"><span class="arrow_expand"></span></a></li>
+                            </ul>
+                        </div>
+                        <div class="product__item__text">
+                            <h6><a asp-controller="products" asp-action="details" asp-route-maSanPham="@item.MaSanPham">@item.TenSanPham</a></h6>
+                            <div class="product__price">@(item.GiaBan.Value.ToString("n0")) &#8363;</div>
+                        </div>
+                    </div>
+                </div>
+            }
+        </div>
+    </div>
+</section>
+<!--Product Section End-->
+
+<!--News Section Begin-->
+<section class="product spad">
+    <div class="container">
+        <div class="row">
+            <div class="col-lg-4 col-md-4">
+                <div class="section-title">
+                    <h4>Tin tức nổi bật</h4>
+                </div>
+            </div>
+        </div>
+
+        <div class="row">
+            @foreach (var item in Model.lstTinTuc)
+            {
+                <div class="col-lg-4">
+                    <div class="blog__item">
+                        <div class="blog__item__pic set-bg" data-setbg=@Url.Content("../img/news/" + item.HinhAnh)></div>
+                        <div class="blog__item__text">
+                            <ul>
+                                <li>bởi <span>@item.TenNguoiDung</span></li>
+                                <li>@item.NgayDang.Value.ToString("dd/MM/yyyy")</li>
+                            </ul>
+                            <h6><a asp-controller="news" asp-action="details" asp-route-maTinTuc="@item.MaTinTuc">@item.TieuDe</a></h6>
+                        </div>
+                    </div>
+                </div>
+            }
+        </div>
+    </div>
+</section>
+<!--News Section End-->
+
+<!--Banner Section Begin-->
+<section class="banner set-bg" data-setbg="../img/banner/banner-1.jpg">
+    <div class="container">
+        <div class="row">
+            <div class="col-xl-7 col-lg-8 m-auto">
+                <div class="banner__slider owl-carousel">
+                    <div class="banner__item">
+                        <div class="banner__text">
+                            <span>Ưu đãi lớn</span>
+                            <h1>Giảm giá 50% cho đơn hàng đầu tiên</h1>
+                            <a href="#">Mua ngay</a>
+                        </div>
+                    </div>
+                    <div class="banner__item">
+                        <div class="banner__text">
+                            <span>Ưu đãi lớn</span>
+                            <h1>Miễn phí giao hàng tại Hà Nội</h1>
+                            <a href="#">Mua ngay</a>
+                        </div>
+                    </div>
+                    <div class="banner__item">
+                        <div class="banner__text">
+                            <span>Mùa hè đã đến</span>
+                            <h1>Thức uống giải khát cho mùa hè nóng nực</h1>
+                            <a href="#">Mua ngay</a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+<!--Banner Section End-->
+
