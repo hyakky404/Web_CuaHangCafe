@@ -3,14 +3,58 @@
 <div class="categories__accordion">
     <div class="accordion" id="accordionExample">
         <div class="card">
-            <div class="card-heading"><a asp-controller="products" asp-action="index" asp-route-target="all" asp-route-targetname="Tất cả">Tất cả</a></div>
+            <div class="card-heading"><a asp-controller="Products" asp-action="Index">Tất cả</a></div>
         </div>
 
         @foreach (var item in Model)
         {
+            var getUrl = "https://localhost:7147/api/productsapi/" + item.MaNhomSp;
             <div class="card">
-                <div class="card-heading"><a asp-controller="products" asp-action="index" asp-route-target="@item.MaNhomSp" asp-route-targetname="@item.TenNhomSp">@item.TenNhomSp</a></div>
+                <div class="card-heading">
+                    @*<a asp-controller="Products" asp-action="ProductType" asp-route-target="@item.MaNhomSp">@item.TenNhomSp</a>*@
+                    <a style="cursor: pointer" onclick="showProductsByCategory('@getUrl')">@item.TenNhomSp</a>
+                </div>
             </div>
         }
     </div>
 </div>
+
+<script>
+    function showProductsByCategory(getUrl) {
+        var str = '';
+        $.ajax({
+            type: 'GET',
+            url: getUrl,
+            dataType: 'json',
+            success: function (data) {
+                $.each(data, function (key, val) {
+                    str += `
+                            <div class="col-lg-4 col-md-6">
+                                <div class="product__item">
+                                    <div class="product__item__pic set-bg" data-setbg="../img/products/${val.hinhAnh}" style="background-image: url(&quot;../img/products/${val.hinhAnh}&quot;);">
+                                        <ul class="product__hover">
+                                            <li>
+                                                <a href="../img/products/${val.hinhAnh}" class="image-popup" >
+                                                    <span class="arrow_expand" ></span>
+                                                </a>
+                                            </li>
+                                        </ul>
+                                    </div>
+                                    <div class="product__item__text">
+                                        <h6>
+                                            <a href="/Products/Details/${val.maSanPham}">${val.tenSanPham}</a>
+                                        </h6>
+                                        <div class="product__price">${val.giaBan} &#8363;</div>
+                                    </div>
+                                </div>
+                            </div>
+                        `
+                });
+                $('#displayProducts').html(str);
+            },
+            Error: function (xhr) {
+                alert(xhr.reponseText)
+            }
+        });
+    }
+</script>

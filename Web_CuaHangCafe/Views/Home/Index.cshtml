@@ -87,7 +87,7 @@
                             </ul>
                         </div>
                         <div class="product__item__text">
-                            <h6><a asp-controller="products" asp-action="details" asp-route-maSanPham="@item.MaSanPham">@item.TenSanPham</a></h6>
+                            <h6><a asp-controller="products" asp-action="details" asp-route-id="@item.MaSanPham">@item.TenSanPham</a></h6>
                             <div class="product__price">@(item.GiaBan.Value.ToString("n0")) &#8363;</div>
                         </div>
                     </div>

@@ -99,6 +99,12 @@
                             <span class="menu-title">Tiếp nhận phản hồi</span>
                         </a>
                     </li>
+                    <li class="nav-item @ViewData["Admin"]">
+                        <a asp-controller="Accounts" asp-action="Index" class="nav-link">
+                            <i class="fa fa-lock menu-icon" aria-hidden="true"></i>
+                            <span class="menu-title">Quản lí tài khoản truy cập</span>
+                        </a>
+                    </li>
                     <li class="nav-item">
                         <a asp-controller="Access" asp-action="Logout" class="nav-link">
                             <i class="fa fa-sign-out menu-icon" aria-hidden="true"></i>
