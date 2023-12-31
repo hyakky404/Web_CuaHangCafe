@@ -67,7 +67,6 @@
                         <div class="blog__item__pic set-bg" data-setbg=@Url.Content("../img/news/" + item.HinhAnh)></div>
                         <div class="blog__item__text">
                             <ul>
-                                <li>bởi <span>@item.TenNguoiDung</span></li>
                                 <li>@item.NgayDang.Value.ToString("dd/MM/yyyy")</li>
                             </ul>
                             <h6><a asp-controller="news" asp-action="details" asp-route-maTinTuc="@item.MaTinTuc">@item.TieuDe</a></h6>

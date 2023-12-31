@@ -18,7 +18,7 @@ namespace Web_CuaHangCafe.Controllers
             return View(pagedListItem);
         }
 
-        public IActionResult Details(string? maTinTuc)
+        public IActionResult Details(int? maTinTuc)
         {
             var tinTuc = db.TbTinTucs.SingleOrDefault(x => x.MaTinTuc == maTinTuc);
             return View(tinTuc);

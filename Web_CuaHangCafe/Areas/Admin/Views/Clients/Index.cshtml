@@ -40,8 +40,9 @@
             <table class="table">
                 <thead>
                     <tr>
-                        <th>Số điện thoại khách hàng</th>
+                        <th>Mã khách hàng</th>
                         <th>Tên khách hàng</th>
+                        <th>Số điện thoại khách hàng</th>
                         <th>Địa chỉ</th>
                         <th>Thao tác</th>
                     </tr>
@@ -51,17 +52,20 @@
                     {
                         <tr>
                             <td>
-                                @Html.DisplayFor(modelItem => item.SdtkhachHang)
+                                @Html.DisplayFor(modelItem => item.Id)
                             </td>
                             <td>
                                 @Html.DisplayFor(modelItem => item.TenKhachHang)
                             </td>
                             <td>
+                                @Html.DisplayFor(modelItem => item.SdtkhachHang)
+                            </td>
+                            <td>
                                 @Html.DisplayFor(modelItem => item.DiaChi)
                             </td>
                             <td>
-                                <a class="btn btn-success btn-sm" asp-action="Edit" asp-route-id="@item.SdtkhachHang" asp-route-name="@item.TenKhachHang">Sửa</a>
-                                <a class="btn btn-danger btn-sm" asp-action="Delete" asp-route-id="@item.SdtkhachHang">Xoá</a>
+                                <a class="btn btn-success btn-sm" asp-action="Edit" asp-route-id="@item.Id" asp-route-name="@item.TenKhachHang">Sửa</a>
+                                <a class="btn btn-danger btn-sm" asp-action="Delete" asp-route-id="@item.Id">Xoá</a>
                             </td>
                         </tr>
                     }

@@ -46,7 +46,7 @@ namespace Web_CuaHangCafe.Areas.Admin.Controllers
         {
             int pageSize = 30;
             int pageNumber = page == null || page < 0 ? 1 : page.Value;
-            var listItem = db.TbChiTietHoaDonBans.AsNoTracking().Where(x => x.MaHoaDon == id).OrderBy(x => x.MaHoaDon).ToList();
+            var listItem = db.TbChiTietHoaDonBans.AsNoTracking().Where(x => x.MaHoaDon == Guid.Parse(id)).OrderBy(x => x.MaHoaDon).ToList();
             PagedList<TbChiTietHoaDonBan> pagedListItem = new PagedList<TbChiTietHoaDonBan>(listItem, pageNumber, pageSize);
             ViewBag.name = name;
             return View(pagedListItem);

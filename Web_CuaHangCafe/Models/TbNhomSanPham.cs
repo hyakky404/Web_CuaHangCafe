@@ -5,7 +5,7 @@ namespace Web_CuaHangCafe.Models;
 
 public partial class TbNhomSanPham
 {
-    public string MaNhomSp { get; set; } = null!;
+    public int MaNhomSp { get; set; }
 
     public string TenNhomSp { get; set; } = null!;
 

@@ -10,6 +10,7 @@ builder.Services.AddControllersWithViews();
 var connectionString = builder.Configuration.GetConnectionString("QlcuaHangCafeContext");
 builder.Services.AddDbContext<QlcuaHangCafeContext>(x => x.UseSqlServer(connectionString));
 builder.Services.AddScoped<INhomSpRepository, NhomSpRepository>();
+builder.Services.AddScoped<ShoppingCartSummaryViewComponent>();
 
 builder.Services.AddDistributedMemoryCache();
 

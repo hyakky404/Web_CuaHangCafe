@@ -5,17 +5,13 @@ namespace Web_CuaHangCafe.Models;
 
 public partial class TbTinTuc
 {
-    public string MaTinTuc { get; set; } = null!;
+    public int MaTinTuc { get; set; }
 
     public string TieuDe { get; set; } = null!;
 
-    public DateTime? NgayDang { get; set; }
+    public DateOnly? NgayDang { get; set; }
 
     public string? NoiDung { get; set; }
 
     public string? HinhAnh { get; set; }
-
-    public string TenNguoiDung { get; set; } = null!;
-
-    public virtual TbQuanTriVien TenNguoiDungNavigation { get; set; } = null!;
 }

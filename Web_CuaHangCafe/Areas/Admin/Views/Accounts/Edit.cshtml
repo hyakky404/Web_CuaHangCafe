@@ -11,7 +11,7 @@
     <div class="row">
         <div class="col-lg-8 col-md-12 col-sm-12">
             <div class="page-header">
-                <h3 class="page-title">Đổi mật khẩu: <span style="color:#666;">@ViewBag.id</span></h3>
+                <h3 class="page-title">Thay đổi thông tin đăng nhập: <span style="color:#666;">@ViewBag.name</span></h3>
             </div>
         </div>
     </div>
@@ -22,7 +22,12 @@
     <div class="col-md-4">
         <form asp-action="Edit">
             <div asp-validation-summary="ModelOnly" class="text-danger"></div>
-            <input type="hidden" asp-for="TenNguoiDung" />
+            <input type="hidden" asp-for="Id" />
+            <div class="form-group">
+                <label class="control-label">Tên người dùng</label>
+                <input asp-for="TenNguoiDung" class="form-control" />
+                <span asp-validation-for="TenNguoiDung" class="text-danger"></span>
+            </div>
             <div class="form-group">
                 <label class="control-label">Nhập mật khẩu mới</label>
                 <input asp-for="MatKhau" type="password" class="form-control" />

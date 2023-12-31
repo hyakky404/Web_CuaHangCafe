@@ -62,7 +62,7 @@ namespace Web_CuaHangCafe.Areas.Admin.Controllers
         [Route("Edit")]
         [Authentication]
         [HttpGet]
-        public IActionResult Edit(string id, string name)
+        public IActionResult Edit(int id, string name)
         {
             var nhomSp = db.TbNhomSanPhams.Find(id);
             ViewBag.name = name;
@@ -84,7 +84,7 @@ namespace Web_CuaHangCafe.Areas.Admin.Controllers
         [Route("Delete")]
         [Authentication]
         [HttpGet]
-        public IActionResult Delete(string id)
+        public IActionResult Delete(int id)
         {
             TempData["Message"] = "";
             var sanPham = db.TbSanPhams.Where(x => x.MaNhomSp == id).ToList();

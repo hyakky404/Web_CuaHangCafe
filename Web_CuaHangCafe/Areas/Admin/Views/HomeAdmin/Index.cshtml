@@ -1,6 +1,7 @@
 ﻿@using Web_CuaHangCafe.Models
+@using Web_CuaHangCafe.ViewModels
 @using X.PagedList.Mvc.Core
-@model X.PagedList.IPagedList<TbSanPham>
+@model X.PagedList.IPagedList<ProductViewModel>
 @addTagHelper *, Microsoft.AspNetCore.Mvc.TagHelpers
 
 @{
@@ -42,8 +43,9 @@
                     <tr>
                         <th>Mã sản phẩm</th>
                         <th>Tên sản phẩm</th>
-                        <th>Giá bán</th>
+                        <th>Hình ảnh</th>
                         <th>Loại sản phẩm</th>
+                        <th>Giá bán</th>
                         <th>Ghi chú</th>
                         <th>Thao tác</th>
                     </tr>
@@ -59,10 +61,13 @@
                                 @Html.DisplayFor(modelItem => item.TenSanPham)
                             </td>
                             <td>
-                                @(item.GiaBan.Value.ToString("n0")) &#8363;
+                                <img src=@Url.Content("../img/products/" + item.HinhAnh) style="width: 80px;height: 80px;border-radius: 0;" />
                             </td>
                             <td>
-                                @Html.DisplayFor(modelItem => item.MaNhomSp)
+                                @Html.DisplayFor(modelItem => item.LoaiSanPham)
+                            </td>
+                            <td>
+                                @(item.GiaBan.Value.ToString("n0")) &#8363;
                             </td>
                             <td>
                                 @Html.DisplayFor(modelItem => item.GhiChu)

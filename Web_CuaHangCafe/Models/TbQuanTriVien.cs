@@ -5,9 +5,9 @@ namespace Web_CuaHangCafe.Models;
 
 public partial class TbQuanTriVien
 {
+    public int Id { get; set; }
+
     public string TenNguoiDung { get; set; } = null!;
 
     public string MatKhau { get; set; } = null!;
-
-    public virtual ICollection<TbTinTuc> TbTinTucs { get; set; } = new List<TbTinTuc>();
 }

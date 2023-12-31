@@ -25,7 +25,7 @@ namespace Web_CuaHangCafe.Controllers
         }
 
         [HttpGet("{maNhomSp}")]
-        public IEnumerable<TbSanPham> GetProductsByCategory(string maNhomSp)
+        public IEnumerable<TbSanPham> GetProductsByCategory(int maNhomSp)
         {
             var sanPham = (from p in db.TbSanPhams
                            where p.MaNhomSp == maNhomSp

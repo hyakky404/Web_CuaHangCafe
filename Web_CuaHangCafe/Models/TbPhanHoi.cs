@@ -5,7 +5,7 @@ namespace Web_CuaHangCafe.Models;
 
 public partial class TbPhanHoi
 {
-    public string MaPhanHoi { get; set; } = null!;
+    public int MaPhanHoi { get; set; }
 
     public string TieuDe { get; set; } = null!;
 

@@ -63,7 +63,7 @@ namespace Web_CuaHangCafe.Areas.Admin.Controllers
         [Route("Edit")]
         [Authentication]
         [HttpGet]
-        public IActionResult Edit(string id, string name)
+        public IActionResult Edit(int id, string name)
         {
             var khachHang = db.TbKhachHangs.Find(id);
             ViewBag.name = name;
@@ -88,7 +88,7 @@ namespace Web_CuaHangCafe.Areas.Admin.Controllers
         public IActionResult Delete(string id)
         {
             TempData["Message"] = "";
-            var hoaDon = db.TbHoaDonBans.Where(x => x.MaHoaDon == id).ToList();
+            var hoaDon = db.TbHoaDonBans.Where(x => x.MaHoaDon == Guid.Parse(id)).ToList();
 
             if (hoaDon.Count() > 0)
             {

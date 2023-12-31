@@ -2,8 +2,10 @@
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Rendering;
 using Microsoft.EntityFrameworkCore;
+using Microsoft.Extensions.Hosting;
 using Web_CuaHangCafe.Models;
 using Web_CuaHangCafe.Models.Authentication;
+using Web_CuaHangCafe.ViewModels;
 using X.PagedList;
 
 namespace Web_CuaHangCafe.Areas.Admin.Controllers
@@ -13,6 +15,12 @@ namespace Web_CuaHangCafe.Areas.Admin.Controllers
     public class HomeAdminController : Controller
     {
         QlcuaHangCafeContext db = new QlcuaHangCafeContext();
+        IWebHostEnvironment hostEnvironment;
+
+        public HomeAdminController(IWebHostEnvironment hc)
+        {
+            hostEnvironment = hc;
+        }
 
         [Route("")]
         [Authentication]
@@ -20,8 +28,20 @@ namespace Web_CuaHangCafe.Areas.Admin.Controllers
         {
             int pageSize = 30;
             int pageNumber = page == null || page < 0 ? 1 : page.Value;
-            var listItem = db.TbSanPhams.AsNoTracking().OrderBy(x => x.MaSanPham).ToList();
-            PagedList<TbSanPham> pagedListItem = new PagedList<TbSanPham>(listItem, pageNumber, pageSize);
+            var listItem = (from product in db.TbSanPhams
+                            join type in db.TbNhomSanPhams on product.MaNhomSp equals type.MaNhomSp
+                            orderby product.MaSanPham
+                            select new ProductViewModel
+                            {
+                                MaSanPham = product.MaSanPham,
+                                TenSanPham = product.TenSanPham,
+                                GiaBan = product.GiaBan,
+                                MoTa = product.MoTa,
+                                HinhAnh = product.HinhAnh,
+                                GhiChu = product.GhiChu,
+                                LoaiSanPham = type.TenNhomSp
+                            }).ToList();
+            PagedList<ProductViewModel> pagedListItem = new PagedList<ProductViewModel>(listItem, pageNumber, pageSize);
             return View(pagedListItem);
         }
 
@@ -52,9 +72,49 @@ namespace Web_CuaHangCafe.Areas.Admin.Controllers
         [Authentication]
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public IActionResult Create(TbSanPham sanPham)
+        public IActionResult Create(TbSanPham sanPham, IFormFile imageFile)
         {
-            db.TbSanPhams.Add(sanPham);
+            //string fileName = "";
+
+            //if (createProduct.HinhAnh != null)
+            //{
+            //    string uploadFolder = Path.Combine(Path.Combine(hostEnvironment.WebRootPath, "img"), "products");
+            //    fileName = createProduct.HinhAnh.FileName;
+            //    string filePath = Path.Combine(uploadFolder, fileName);
+            //    createProduct.HinhAnh.CopyTo(new FileStream(filePath, FileMode.Create));
+            //}
+
+            //var product = new TbSanPham
+            //{
+            //    MaSanPham = createProduct.MaSanPham,
+            //    TenSanPham = createProduct.TenSanPham,
+            //    GiaBan = createProduct.GiaBan,
+            //    MoTa = createProduct.MoTa,
+            //    HinhAnh = fileName,
+            //    GhiChu = createProduct.GhiChu,
+            //    MaNhomSp = createProduct.MaLoaiSanPham
+            //};
+
+            if (imageFile != null && imageFile.Length > 0)
+            {
+                // Đối với mục đích minh họa, chúng ta sẽ lưu ảnh vào thư mục Images trong wwwroot
+                string uploadFolder = Path.Combine(Path.Combine(hostEnvironment.WebRootPath, "img"), "products");
+                string uniqueFileName = Guid.NewGuid().ToString() + "_" + imageFile.FileName;
+                string filePath = Path.Combine(uploadFolder, uniqueFileName);
+
+                using (var stream = new FileStream(filePath, FileMode.Create))
+                {
+                    imageFile.CopyTo(stream);
+                }
+
+                // Lưu đường dẫn hoặc thông tin về ảnh vào cơ sở dữ liệu nếu cần
+                // Ví dụ: lưu đường dẫn filePath vào cơ sở dữ liệu
+                // ...
+
+                return RedirectToAction("Index");
+            }
+
+            //db.TbSanPhams.Add(product);
             db.SaveChanges();
             TempData["Message"] = "Thêm sản phẩm thành công";
             return RedirectToAction("Index", "HomeAdmin");
@@ -63,17 +123,29 @@ namespace Web_CuaHangCafe.Areas.Admin.Controllers
         [Route("Details")]
         [Authentication]
         [HttpGet]
-        public IActionResult Details(string id, string name)
+        public IActionResult Details(int id, string name)
         {
-            var sanPham = db.TbSanPhams.SingleOrDefault(x => x.MaSanPham == id);
+            var productItem = (from product in db.TbSanPhams
+                            join type in db.TbNhomSanPhams on product.MaNhomSp equals type.MaNhomSp
+                            where product.MaSanPham == id
+                            select new ProductViewModel
+                            {
+                                MaSanPham = product.MaSanPham,
+                                TenSanPham = product.TenSanPham,
+                                GiaBan = product.GiaBan,
+                                MoTa = product.MoTa,
+                                HinhAnh = product.HinhAnh,
+                                GhiChu = product.GhiChu,
+                                LoaiSanPham = type.TenNhomSp
+                            }).SingleOrDefault();
             ViewBag.name = name;
-            return View(sanPham);
+            return View(productItem);
         }
 
         [Route("Edit")]
         [Authentication]
         [HttpGet]
-        public IActionResult Edit(string id, string name)
+        public IActionResult Edit(int id, string name)
         {
             ViewBag.MaNhomSp = new SelectList(db.TbNhomSanPhams.ToList(), "MaNhomSp", "TenNhomSp");
             var sanPham = db.TbSanPhams.Find(id);
@@ -85,9 +157,30 @@ namespace Web_CuaHangCafe.Areas.Admin.Controllers
         [Authentication]
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public IActionResult Edit(TbSanPham sanPham)
+        public IActionResult Edit(CreateProductViewModel createProduct)
         {
-            db.Entry(sanPham).State = EntityState.Modified;
+            string fileName = "";
+
+            if (createProduct.HinhAnh != null)
+            {
+                string uploadFolder = Path.Combine(Path.Combine(hostEnvironment.WebRootPath, "img"), "products");
+                fileName = createProduct.HinhAnh.FileName;
+                string filePath = Path.Combine(uploadFolder, fileName);
+                createProduct.HinhAnh.CopyTo(new FileStream(filePath, FileMode.Create));
+            }
+
+            var product = new TbSanPham
+            {
+                MaSanPham = createProduct.MaSanPham,
+                TenSanPham = createProduct.TenSanPham,
+                GiaBan = createProduct.GiaBan,
+                MoTa = createProduct.MoTa,
+                HinhAnh = fileName,
+                GhiChu = createProduct.GhiChu,
+                MaNhomSp = createProduct.MaLoaiSanPham
+            };
+
+            db.Entry(product).State = EntityState.Modified;
             db.SaveChanges();
             TempData["Message"] = "Sửa sản phẩm thành công";
             return RedirectToAction("Index", "HomeAdmin");
@@ -96,7 +189,7 @@ namespace Web_CuaHangCafe.Areas.Admin.Controllers
         [Route("Delete")]
         [Authentication]
         [HttpGet]
-        public IActionResult Delete(string id)
+        public IActionResult Delete(int id)
         {
             TempData["Message"] = "";
             var chiTietHoaDon = db.TbChiTietHoaDonBans.Where(x => x.MaSanPham == id).ToList();

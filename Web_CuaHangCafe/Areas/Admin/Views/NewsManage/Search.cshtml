@@ -39,7 +39,6 @@
                         <th>Mã tin tức</th>
                         <th>Tiêu đề</th>
                         <th>Ngày đăng</th>
-                        <th>Người đăng</th>
                         <th>Thao tác</th>
                     </tr>
                 </thead>
@@ -55,9 +54,6 @@
                             </td>
                             <td>
                                 @Html.DisplayFor(modelItem => item.NgayDang)
-                            </td>
-                            <td>
-                                @Html.DisplayFor(modelItem => item.TenNguoiDung)
                             </td>
                             <td>
                                 <button class="btn btn-primary btn-sm" asp-action="Details" asp-route-id="@item.MaTinTuc">Chi tiết</button>

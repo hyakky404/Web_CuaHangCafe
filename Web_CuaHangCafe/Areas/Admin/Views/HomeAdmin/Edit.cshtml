@@ -1,4 +1,4 @@
-﻿@model Web_CuaHangCafe.Models.TbSanPham
+﻿@model Web_CuaHangCafe.ViewModels.CreateProductViewModel
 @addTagHelper *, Microsoft.AspNetCore.Mvc.TagHelpers
 
 @{
@@ -20,7 +20,7 @@
 <hr />
 <div class="row">
     <div class="col-md-4">
-        <form asp-action="Edit">
+        <form asp-action="Edit" enctype="multipart/form-data">
             <div asp-validation-summary="ModelOnly" class="text-danger"></div>
             <input type="hidden" asp-for="MaSanPham" />
             <div class="form-group">
@@ -40,7 +40,7 @@
             </div>
             <div class="form-group">
                 <label class="control-label">Hình ảnh</label>
-                <input asp-for="HinhAnh" class="form-control" />
+                <input asp-for="HinhAnh" type="file" class="form-control" />
                 <span asp-validation-for="HinhAnh" class="text-danger"></span>
             </div>
             <div class="form-group">
@@ -50,8 +50,8 @@
             </div>
             <div class="form-group">
                 <label class="control-label">Loại sản phẩm</label>
-                <select asp-for="MaNhomSp" class="form-control" asp-items="ViewBag.MaNhomSp"></select>
-                <span asp-validation-for="MaNhomSp" class="text-danger"></span>
+                <select asp-for="MaLoaiSanPham" class="form-control" asp-items="ViewBag.MaNhomSp"></select>
+                <span asp-validation-for="MaLoaiSanPham" class="text-danger"></span>
             </div>
             <div class="form-group">
                 <input type="submit" value="Lưu" class="btn btn-primary" />

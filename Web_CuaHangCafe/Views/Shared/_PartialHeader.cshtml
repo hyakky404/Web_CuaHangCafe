@@ -26,9 +26,7 @@
                             <span class="icon_search search-switch" title="Tìm kiếm"></span>
                         </li>
                         <li>
-                            <a asp-controller="ShopCart" asp-action="Index" title="Giỏ hàng">
-                                <span class="icon_bag_alt"></span>
-                            </a>
+                            @await Component.InvokeAsync("ShoppingCartSummary")
                         </li>
                     </ul>
                 </div>

@@ -64,7 +64,7 @@ namespace Web_CuaHangCafe.Areas.Admin.Controllers
         [Route("Details")]
         [Authentication]
         [HttpGet]
-        public IActionResult Details(string id, string name)
+        public IActionResult Details(int id, string name)
         {
             var tinTuc = db.TbTinTucs.SingleOrDefault(x => x.MaTinTuc == id);
             ViewBag.name = name;
@@ -74,7 +74,7 @@ namespace Web_CuaHangCafe.Areas.Admin.Controllers
         [Route("Edit")]
         [Authentication]
         [HttpGet]
-        public IActionResult Edit(string id, string name)
+        public IActionResult Edit(int id, string name)
         {
             ViewBag.NguoiDang = new SelectList(db.TbQuanTriViens.ToList(), "TenNguoiDung", "TenNguoiDung");
             var tinTuc = db.TbTinTucs.Find(id);
@@ -97,7 +97,7 @@ namespace Web_CuaHangCafe.Areas.Admin.Controllers
         [Route("Delete")]
         [Authentication]
         [HttpGet]
-        public IActionResult Delete(string id)
+        public IActionResult Delete(int id)
         {
             TempData["Message"] = "";
             db.Remove(db.TbTinTucs.Find(id));

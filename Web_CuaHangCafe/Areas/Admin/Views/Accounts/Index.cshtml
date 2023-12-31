@@ -29,6 +29,7 @@
             <table class="table">
                 <thead>
                     <tr>
+                        <th>ID</th>
                         <th>Tên người dùng</th>
                         <th>Thao tác</th>
                     </tr>
@@ -38,11 +39,14 @@
                     {
                         <tr>
                             <td>
+                                @Html.DisplayFor(modelItem =>item.Id)
+                            </td>
+                            <td>
                                 @Html.DisplayFor(modelItem => item.TenNguoiDung)
                             </td>
                             <td>
-                                <a class="btn btn-primary btn-sm" asp-action="Edit" asp-route-id="@item.TenNguoiDung" asp-route-name="@item.TenNguoiDung">Đổi mật khẩu</a>
-                                <a class="btn btn-danger btn-sm" asp-action="Delete" asp-route-id="@item.TenNguoiDung">Xoá</a>
+                                <a class="btn btn-primary btn-sm" asp-action="Edit" asp-route-id="@item.Id" asp-route-name="@item.TenNguoiDung">Thay đổi thông tin đăng nhập</a>
+                                <a class="btn btn-danger btn-sm" asp-action="Delete" asp-route-id="@item.Id">Xoá</a>
                             </td>
                         </tr>
                     }

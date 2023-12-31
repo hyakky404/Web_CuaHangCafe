@@ -5,9 +5,9 @@ namespace Web_CuaHangCafe.Models;
 
 public partial class TbChiTietHoaDonBan
 {
-    public string MaHoaDon { get; set; } = null!;
+    public Guid MaHoaDon { get; set; }
 
-    public string MaSanPham { get; set; } = null!;
+    public int MaSanPham { get; set; }
 
     public decimal? GiaBan { get; set; }
 

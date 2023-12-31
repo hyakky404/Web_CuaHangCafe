@@ -41,7 +41,7 @@ namespace Web_CuaHangCafe.Areas.Admin.Controllers
         [Route("Details")]
         [Authentication]
         [HttpGet]
-        public IActionResult Details(string id, string name)
+        public IActionResult Details(int id, string name)
         {
             var phanHoi = db.TbPhanHois.SingleOrDefault(x => x.MaPhanHoi == id);
             ViewBag.name = name;
@@ -51,7 +51,7 @@ namespace Web_CuaHangCafe.Areas.Admin.Controllers
         [Route("Delete")]
         [Authentication]
         [HttpGet]
-        public IActionResult Delete(string id)
+        public IActionResult Delete(int id)
         {
             TempData["Message"] = "";
             db.Remove(db.TbPhanHois.Find(id));

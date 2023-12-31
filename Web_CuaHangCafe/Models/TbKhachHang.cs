@@ -5,9 +5,11 @@ namespace Web_CuaHangCafe.Models;
 
 public partial class TbKhachHang
 {
-    public string SdtkhachHang { get; set; } = null!;
+    public Guid Id { get; set; }
 
     public string TenKhachHang { get; set; } = null!;
+
+    public string SdtkhachHang { get; set; } = null!;
 
     public string DiaChi { get; set; } = null!;
 

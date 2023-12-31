@@ -43,7 +43,6 @@
                         <th>Mã tin tức</th>
                         <th>Tiêu đề</th>
                         <th>Ngày đăng</th>
-                        <th>Người đăng</th>
                         <th>Thao tác</th>
                     </tr>
                 </thead>
@@ -59,9 +58,6 @@
                             </td>
                             <td>
                                 @(item.NgayDang.Value.ToString("dd/MM/yyyy"))
-                            </td>
-                            <td>
-                                @Html.DisplayFor(modelItem => item.TenNguoiDung)
                             </td>
                             <td>
                                 <a class="btn btn-primary btn-sm" asp-action="Details" asp-route-id="@item.MaTinTuc" asp-route-name="@item.TieuDe">Xem</a>

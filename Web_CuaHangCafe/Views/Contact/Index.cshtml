@@ -49,7 +49,6 @@
                         <p class="@TempData["Status"]">@TempData["Message"]</p>
                         <form asp-action="Index">
                             <div asp-validation-summary="ModelOnly" class="text-danger"></div>
-                            <input asp-for="MaPhanHoi" type="text" maxlength="6" class="form-control" placeholder="Mã phản hồi" autocomplete="off" required />
                             <input asp-for="TieuDe" type="text" maxlength="50" class="form-control" placeholder="Tiêu đề" autocomplete="off" required />
                             <input asp-for="SoDienThoai" type="tel" maxlength="10" class="form-control" placeholder="Số điện thoại" autocomplete="off" required />
                             <textarea asp-for="NoiDung" class="form-control" placeholder="Lời nhắn" required></textarea>
