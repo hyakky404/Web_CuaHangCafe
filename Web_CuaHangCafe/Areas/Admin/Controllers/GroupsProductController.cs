@@ -1,6 +1,7 @@
 ﻿using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Rendering;
 using Microsoft.EntityFrameworkCore;
+using Web_CuaHangCafe.Data;
 using Web_CuaHangCafe.Models;
 using Web_CuaHangCafe.Models.Authentication;
 using X.PagedList;
@@ -11,7 +12,12 @@ namespace Web_CuaHangCafe.Areas.Admin.Controllers
     [Route("Admin/GroupsProduct")]
     public class GroupsProductController : Controller
     {
-        QlcuaHangCafeContext db = new QlcuaHangCafeContext();
+        private readonly ApplicationDbContext _context;
+
+        public GroupsProductController(ApplicationDbContext context)
+        {
+            _context = context;
+        }
 
         [Route("")]
         [Route("Index")]
@@ -20,8 +26,9 @@ namespace Web_CuaHangCafe.Areas.Admin.Controllers
         {
             int pageSize = 30;
             int pageNumber = page == null || page < 0 ? 1 : page.Value;
-            var listItem = db.TbNhomSanPhams.AsNoTracking().OrderBy(x => x.MaNhomSp).ToList();
+            var listItem = _context.TbNhomSanPhams.AsNoTracking().OrderBy(x => x.MaNhomSp).ToList();
             PagedList<TbNhomSanPham> pagedListItem = new PagedList<TbNhomSanPham>(listItem, pageNumber, pageSize);
+
             return View(pagedListItem);
         }
 
@@ -32,10 +39,13 @@ namespace Web_CuaHangCafe.Areas.Admin.Controllers
         {
             int pageSize = 30;
             int pageNumber = page == null || page < 0 ? 1 : page.Value;
+
             search = search.ToLower();
             ViewBag.search = search;
-            var listItem = db.TbNhomSanPhams.AsNoTracking().Where(x => x.TenNhomSp.ToLower().Contains(search)).OrderBy(x => x.MaNhomSp).ToList();
+
+            var listItem = _context.TbNhomSanPhams.AsNoTracking().Where(x => x.TenNhomSp.ToLower().Contains(search)).OrderBy(x => x.MaNhomSp).ToList();
             PagedList<TbNhomSanPham> pagedListItem = new PagedList<TbNhomSanPham>(listItem, pageNumber, pageSize);
+
             return View(pagedListItem);
         }
 
@@ -53,9 +63,11 @@ namespace Web_CuaHangCafe.Areas.Admin.Controllers
         [ValidateAntiForgeryToken]
         public IActionResult Create(TbNhomSanPham nhomSp)
         {
-            db.TbNhomSanPhams.Add(nhomSp);
-            db.SaveChanges();
+            _context.TbNhomSanPhams.Add(nhomSp);
+            _context.SaveChanges();
+
             TempData["Message"] = "Thêm thành công";
+
             return RedirectToAction("Index", "GroupsProduct");
         }
 
@@ -64,8 +76,9 @@ namespace Web_CuaHangCafe.Areas.Admin.Controllers
         [HttpGet]
         public IActionResult Edit(int id, string name)
         {
-            var nhomSp = db.TbNhomSanPhams.Find(id);
+            var nhomSp = _context.TbNhomSanPhams.Find(id);
             ViewBag.name = name;
+
             return View(nhomSp);
         }
 
@@ -75,9 +88,11 @@ namespace Web_CuaHangCafe.Areas.Admin.Controllers
         [ValidateAntiForgeryToken]
         public IActionResult Edit(TbNhomSanPham nhomSp)
         {
-            db.Entry(nhomSp).State = EntityState.Modified;
-            db.SaveChanges();
+            _context.Entry(nhomSp).State = EntityState.Modified;
+            _context.SaveChanges();
+
             TempData["Message"] = "Sửa thành công";
+
             return RedirectToAction("Index", "GroupsProduct");
         }
 
@@ -87,7 +102,8 @@ namespace Web_CuaHangCafe.Areas.Admin.Controllers
         public IActionResult Delete(int id)
         {
             TempData["Message"] = "";
-            var sanPham = db.TbSanPhams.Where(x => x.MaNhomSp == id).ToList();
+
+            var sanPham = _context.TbSanPhams.Where(x => x.MaNhomSp == id).ToList();
 
             if (sanPham.Count() > 0)
             {
@@ -95,9 +111,11 @@ namespace Web_CuaHangCafe.Areas.Admin.Controllers
                 return RedirectToAction("Index", "GroupsProduct");
             }
 
-            db.Remove(db.TbNhomSanPhams.Find(id));
-            db.SaveChanges();
+            _context.Remove(_context.TbNhomSanPhams.Find(id));
+            _context.SaveChanges();
+
             TempData["Message"] = "Xoá thành công";
+
             return RedirectToAction("Index", "GroupsProduct");
         }
     }

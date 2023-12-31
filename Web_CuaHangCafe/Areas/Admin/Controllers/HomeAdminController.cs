@@ -3,6 +3,7 @@ using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Rendering;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Hosting;
+using Web_CuaHangCafe.Data;
 using Web_CuaHangCafe.Models;
 using Web_CuaHangCafe.Models.Authentication;
 using Web_CuaHangCafe.ViewModels;
@@ -14,11 +15,12 @@ namespace Web_CuaHangCafe.Areas.Admin.Controllers
     [Route("HomeAdmin")]
     public class HomeAdminController : Controller
     {
-        QlcuaHangCafeContext db = new QlcuaHangCafeContext();
+        private readonly ApplicationDbContext _context;
         IWebHostEnvironment hostEnvironment;
 
-        public HomeAdminController(IWebHostEnvironment hc)
+        public HomeAdminController(ApplicationDbContext context, IWebHostEnvironment hc)
         {
+            _context = context;
             hostEnvironment = hc;
         }
 
@@ -28,8 +30,9 @@ namespace Web_CuaHangCafe.Areas.Admin.Controllers
         {
             int pageSize = 30;
             int pageNumber = page == null || page < 0 ? 1 : page.Value;
-            var listItem = (from product in db.TbSanPhams
-                            join type in db.TbNhomSanPhams on product.MaNhomSp equals type.MaNhomSp
+
+            var listItem = (from product in _context.TbSanPhams
+                            join type in _context.TbNhomSanPhams on product.MaNhomSp equals type.MaNhomSp
                             orderby product.MaSanPham
                             select new ProductViewModel
                             {
@@ -41,7 +44,9 @@ namespace Web_CuaHangCafe.Areas.Admin.Controllers
                                 GhiChu = product.GhiChu,
                                 LoaiSanPham = type.TenNhomSp
                             }).ToList();
+
             PagedList<ProductViewModel> pagedListItem = new PagedList<ProductViewModel>(listItem, pageNumber, pageSize);
+
             return View(pagedListItem);
         }
 
@@ -52,10 +57,13 @@ namespace Web_CuaHangCafe.Areas.Admin.Controllers
         {
             int pageSize = 30;
             int pageNumber = page == null || page < 0 ? 1 : page.Value;
+
             search = search.ToLower();
             ViewBag.search = search;
-            var listItem = db.TbSanPhams.AsNoTracking().Where(x => x.TenSanPham.ToLower().Contains(search)).OrderBy(x => x.MaSanPham).ToList();
+
+            var listItem = _context.TbSanPhams.AsNoTracking().Where(x => x.TenSanPham.ToLower().Contains(search)).OrderBy(x => x.MaSanPham).ToList();
             PagedList<TbSanPham> pagedListItem = new PagedList<TbSanPham>(listItem, pageNumber, pageSize);
+
             return View(pagedListItem);
         }
 
@@ -64,7 +72,8 @@ namespace Web_CuaHangCafe.Areas.Admin.Controllers
         [HttpGet]
         public IActionResult Create()
         {
-            ViewBag.MaNhomSp = new SelectList(db.TbNhomSanPhams.ToList(), "MaNhomSp", "TenNhomSp");
+            ViewBag.MaNhomSp = new SelectList(_context.TbNhomSanPhams.ToList(), "MaNhomSp", "TenNhomSp");
+
             return View();
         }
 
@@ -115,8 +124,9 @@ namespace Web_CuaHangCafe.Areas.Admin.Controllers
             }
 
             //db.TbSanPhams.Add(product);
-            db.SaveChanges();
+            _context.SaveChanges();
             TempData["Message"] = "Thêm sản phẩm thành công";
+
             return RedirectToAction("Index", "HomeAdmin");
         }
 
@@ -125,8 +135,8 @@ namespace Web_CuaHangCafe.Areas.Admin.Controllers
         [HttpGet]
         public IActionResult Details(int id, string name)
         {
-            var productItem = (from product in db.TbSanPhams
-                            join type in db.TbNhomSanPhams on product.MaNhomSp equals type.MaNhomSp
+            var productItem = (from product in _context.TbSanPhams
+                            join type in _context.TbNhomSanPhams on product.MaNhomSp equals type.MaNhomSp
                             where product.MaSanPham == id
                             select new ProductViewModel
                             {
@@ -138,7 +148,9 @@ namespace Web_CuaHangCafe.Areas.Admin.Controllers
                                 GhiChu = product.GhiChu,
                                 LoaiSanPham = type.TenNhomSp
                             }).SingleOrDefault();
+
             ViewBag.name = name;
+
             return View(productItem);
         }
 
@@ -147,9 +159,11 @@ namespace Web_CuaHangCafe.Areas.Admin.Controllers
         [HttpGet]
         public IActionResult Edit(int id, string name)
         {
-            ViewBag.MaNhomSp = new SelectList(db.TbNhomSanPhams.ToList(), "MaNhomSp", "TenNhomSp");
-            var sanPham = db.TbSanPhams.Find(id);
+            var sanPham = _context.TbSanPhams.Find(id);
+
+            ViewBag.MaNhomSp = new SelectList(_context.TbNhomSanPhams.ToList(), "MaNhomSp", "TenNhomSp");
             ViewBag.name = name;
+
             return View(sanPham);
         }
 
@@ -180,8 +194,8 @@ namespace Web_CuaHangCafe.Areas.Admin.Controllers
                 MaNhomSp = createProduct.MaLoaiSanPham
             };
 
-            db.Entry(product).State = EntityState.Modified;
-            db.SaveChanges();
+            _context.Entry(product).State = EntityState.Modified;
+            _context.SaveChanges();
             TempData["Message"] = "Sửa sản phẩm thành công";
             return RedirectToAction("Index", "HomeAdmin");
         }
@@ -192,17 +206,20 @@ namespace Web_CuaHangCafe.Areas.Admin.Controllers
         public IActionResult Delete(int id)
         {
             TempData["Message"] = "";
-            var chiTietHoaDon = db.TbChiTietHoaDonBans.Where(x => x.MaSanPham == id).ToList();
+            var chiTietHoaDon = _context.TbChiTietHoaDonBans.Where(x => x.MaSanPham == id).ToList();
 
             if (chiTietHoaDon.Count() > 0)
             {
                 TempData["Message"] = "Không xoá được sản phẩm";
+
                 return RedirectToAction("Index", "HomeAdmin");
             }
 
-            db.Remove(db.TbSanPhams.Find(id));
-            db.SaveChanges();
+            _context.Remove(_context.TbSanPhams.Find(id));
+            _context.SaveChanges();
+
             TempData["Message"] = "Sản phẩm đã được xoá";
+
             return RedirectToAction("Index", "HomeAdmin");
         }
     }

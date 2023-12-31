@@ -1,5 +1,5 @@
-﻿using Microsoft.AspNetCore.Http;
-using Microsoft.AspNetCore.Mvc;
+﻿using Microsoft.AspNetCore.Mvc;
+using Web_CuaHangCafe.Data;
 using Web_CuaHangCafe.Models;
 
 namespace Web_CuaHangCafe.Controllers.API
@@ -8,12 +8,17 @@ namespace Web_CuaHangCafe.Controllers.API
     [ApiController]
     public class ProductsController : ControllerBase
     {
-        QlcuaHangCafeContext db = new QlcuaHangCafeContext();
+        private readonly ApplicationDbContext _context;
+
+        public ProductsController(ApplicationDbContext context)
+        {
+            _context = context;
+        }
 
         [HttpGet]
         public IActionResult GetAll()
         {
-            return Ok(db.TbSanPhams);
+            return Ok(_context.TbSanPhams);
         }
 
         [HttpGet("{id}")]
@@ -21,7 +26,7 @@ namespace Web_CuaHangCafe.Controllers.API
         {
             try
             {
-                var hangHoa = db.TbSanPhams.SingleOrDefault(x => x.MaSanPham == id);
+                var hangHoa = _context.TbSanPhams.SingleOrDefault(x => x.MaSanPham == id);
 
                 if (hangHoa == null)
                 {
@@ -56,7 +61,7 @@ namespace Web_CuaHangCafe.Controllers.API
                 MaNhomSp = sanPham.MaNhomSp
             };
 
-            db.TbSanPhams.Add(hangHoa);
+            _context.TbSanPhams.Add(hangHoa);
 
             return Ok(new
             {
@@ -70,7 +75,7 @@ namespace Web_CuaHangCafe.Controllers.API
         {
             try
             {
-                var hangHoa = db.TbSanPhams.SingleOrDefault(x => x.MaSanPham == id);
+                var hangHoa = _context.TbSanPhams.SingleOrDefault(x => x.MaSanPham == id);
 
                 if (hangHoa == null)
                 {
@@ -106,14 +111,14 @@ namespace Web_CuaHangCafe.Controllers.API
         {
             try
             {
-                var hangHoa = db.TbSanPhams.SingleOrDefault(x => x.MaSanPham == id);
+                var hangHoa = _context.TbSanPhams.SingleOrDefault(x => x.MaSanPham == id);
 
                 if (hangHoa == null)
                 {
                     return NotFound(404);
                 }
 
-                db.TbSanPhams.Remove(hangHoa);
+                _context.TbSanPhams.Remove(hangHoa);
 
                 return Ok(new
                 {

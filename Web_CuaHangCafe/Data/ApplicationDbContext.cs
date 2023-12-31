@@ -1,39 +1,36 @@
 ﻿using System;
 using System.Collections.Generic;
 using Microsoft.EntityFrameworkCore;
+using Web_CuaHangCafe.Models;
 
-namespace Web_CuaHangCafe.Models;
+namespace Web_CuaHangCafe.Data;
 
-public partial class QlcuaHangCafeContext : DbContext
+public class ApplicationDbContext : DbContext
 {
-    public QlcuaHangCafeContext()
+    public ApplicationDbContext()
     {
     }
 
-    public QlcuaHangCafeContext(DbContextOptions<QlcuaHangCafeContext> options)
+    public ApplicationDbContext(DbContextOptions<ApplicationDbContext> options)
         : base(options)
     {
     }
 
-    public virtual DbSet<TbChiTietHoaDonBan> TbChiTietHoaDonBans { get; set; }
+    public DbSet<TbChiTietHoaDonBan> TbChiTietHoaDonBans { get; set; }
 
-    public virtual DbSet<TbHoaDonBan> TbHoaDonBans { get; set; }
+    public DbSet<TbHoaDonBan> TbHoaDonBans { get; set; }
 
-    public virtual DbSet<TbKhachHang> TbKhachHangs { get; set; }
+    public DbSet<TbKhachHang> TbKhachHangs { get; set; }
 
-    public virtual DbSet<TbNhomSanPham> TbNhomSanPhams { get; set; }
+    public DbSet<TbNhomSanPham> TbNhomSanPhams { get; set; }
 
-    public virtual DbSet<TbPhanHoi> TbPhanHois { get; set; }
+    public DbSet<TbPhanHoi> TbPhanHois { get; set; }
 
-    public virtual DbSet<TbQuanTriVien> TbQuanTriViens { get; set; }
+    public DbSet<TbQuanTriVien> TbQuanTriViens { get; set; }
 
-    public virtual DbSet<TbSanPham> TbSanPhams { get; set; }
+    public DbSet<TbSanPham> TbSanPhams { get; set; }
 
-    public virtual DbSet<TbTinTuc> TbTinTucs { get; set; }
-
-    protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
-#warning To protect potentially sensitive information in your connection string, you should move it out of source code. You can avoid scaffolding the connection string by using the Name= syntax to read it from configuration - see https://go.microsoft.com/fwlink/?linkid=2131148. For more guidance on storing connection strings, see https://go.microsoft.com/fwlink/?LinkId=723263.
-        => optionsBuilder.UseSqlServer("Data Source=DESKTOP-VS99KMT\\SQLEXPRESS;Initial Catalog=QLCuaHangCafe;Integrated Security=True;Connect Timeout=30;Encrypt=False;Trust Server Certificate=False;Application Intent=ReadWrite;Multi Subnet Failover=False");
+    public DbSet<TbTinTuc> TbTinTucs { get; set; }
 
     protected override void OnModelCreating(ModelBuilder modelBuilder)
     {
@@ -146,9 +143,5 @@ public partial class QlcuaHangCafeContext : DbContext
 
             entity.Property(e => e.TieuDe).HasMaxLength(255);
         });
-
-        OnModelCreatingPartial(modelBuilder);
     }
-
-    partial void OnModelCreatingPartial(ModelBuilder modelBuilder);
 }

@@ -1,8 +1,8 @@
 ﻿using Microsoft.AspNetCore.Mvc;
-using Microsoft.AspNetCore.Mvc.Rendering;
 using Microsoft.EntityFrameworkCore;
 using System.Security.Cryptography;
 using System.Text;
+using Web_CuaHangCafe.Data;
 using Web_CuaHangCafe.Models;
 using Web_CuaHangCafe.Models.Authentication;
 using X.PagedList;
@@ -13,17 +13,22 @@ namespace Web_CuaHangCafe.Areas.Admin.Controllers
     [Route("Admin/Accounts")]
     public class AccountsController : Controller
     {
-        QlcuaHangCafeContext db = new QlcuaHangCafeContext();
+        private readonly ApplicationDbContext _context;
+
+        public AccountsController(ApplicationDbContext context)
+        {
+            _context = context;
+        }
 
         public static string HashPassword(string password)
         {
             using (SHA256 sha256 = SHA256.Create())
             {
                 // Convert the password string to a byte array
-                byte[] passwordBytes = Encoding.UTF8.GetBytes(password);
+                byte[] passwor_contextytes = Encoding.UTF8.GetBytes(password);
 
                 // Compute the SHA-256 hash of the password bytes
-                byte[] hashBytes = sha256.ComputeHash(passwordBytes);
+                byte[] hashBytes = sha256.ComputeHash(passwor_contextytes);
 
                 // Convert the byte array to a hexadecimal string
                 StringBuilder builder = new StringBuilder();
@@ -43,8 +48,9 @@ namespace Web_CuaHangCafe.Areas.Admin.Controllers
         {
             int pageSize = 30;
             int pageNumber = page == null || page < 0 ? 1 : page.Value;
-            var listItem = db.TbQuanTriViens.AsNoTracking().OrderBy(x => x.TenNguoiDung).ToList();
+            var listItem = _context.TbQuanTriViens.AsNoTracking().OrderBy(x => x.TenNguoiDung).ToList();
             PagedList<TbQuanTriVien> pagedListItem = new PagedList<TbQuanTriVien>(listItem, pageNumber, pageSize);
+
             return View(pagedListItem);
         }
 
@@ -62,9 +68,10 @@ namespace Web_CuaHangCafe.Areas.Admin.Controllers
         [ValidateAntiForgeryToken]
         public IActionResult Create(TbQuanTriVien quanTriVien)
         {
-            db.TbQuanTriViens.Add(quanTriVien);
-            db.SaveChanges();
+            _context.TbQuanTriViens.Add(quanTriVien);
+            _context.SaveChanges();
             TempData["Message"] = "Thêm thành công";
+
             return RedirectToAction("Index", "Accounts");
         }
 
@@ -73,8 +80,9 @@ namespace Web_CuaHangCafe.Areas.Admin.Controllers
         [HttpGet]
         public IActionResult Edit(int id, string name)
         {
-            var quanTriVien = db.TbQuanTriViens.Find(id);
+            var quanTriVien = _context.TbQuanTriViens.Find(id);
             ViewBag.id = id;
+
             return View(quanTriVien);
         }
 
@@ -85,10 +93,14 @@ namespace Web_CuaHangCafe.Areas.Admin.Controllers
         public IActionResult Edit(TbQuanTriVien quanTriVien)
         {
             string hashPass = HashPassword(quanTriVien.MatKhau);
+
             quanTriVien.MatKhau = hashPass;
-            db.Entry(quanTriVien).State = EntityState.Modified;
-            db.SaveChanges();
+
+            _context.Entry(quanTriVien).State = EntityState.Modified;
+            _context.SaveChanges();
+
             TempData["Message"] = "Sửa thành công";
+
             return RedirectToAction("Index", "Accounts");
         }
 
@@ -98,9 +110,12 @@ namespace Web_CuaHangCafe.Areas.Admin.Controllers
         public IActionResult Delete(string id)
         {
             TempData["Message"] = "";
-            db.Remove(db.TbQuanTriViens.Find(id));
-            db.SaveChanges();
+
+            _context.Remove(_context.TbQuanTriViens.Find(id));
+            _context.SaveChanges();
+
             TempData["Message"] = "Xoá thành công";
+
             return RedirectToAction("Index", "Accounts");
         }
     }

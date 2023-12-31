@@ -2,6 +2,7 @@
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Rendering;
 using Microsoft.EntityFrameworkCore;
+using Web_CuaHangCafe.Data;
 using Web_CuaHangCafe.Models;
 using Web_CuaHangCafe.Models.Authentication;
 using X.PagedList;
@@ -12,7 +13,12 @@ namespace Web_CuaHangCafe.Areas.Admin.Controllers
     [Route("Admin/News")]
     public class NewsManageController : Controller
     {
-        QlcuaHangCafeContext db = new QlcuaHangCafeContext();
+        private readonly ApplicationDbContext _context;
+
+        public NewsManageController(ApplicationDbContext context)
+        {
+            _context = context;
+        }
 
         [Route("")]
         [Route("Index")]
@@ -21,8 +27,9 @@ namespace Web_CuaHangCafe.Areas.Admin.Controllers
         {
             int pageSize = 30;
             int pageNumber = page == null || page < 0 ? 1 : page.Value;
-            var listItem = db.TbTinTucs.AsNoTracking().OrderBy(x => x.MaTinTuc).ToList();
+            var listItem = _context.TbTinTucs.AsNoTracking().OrderBy(x => x.MaTinTuc).ToList();
             PagedList<TbTinTuc> pagedListItem = new PagedList<TbTinTuc>(listItem, pageNumber, pageSize);
+
             return View(pagedListItem);
         }
 
@@ -33,10 +40,13 @@ namespace Web_CuaHangCafe.Areas.Admin.Controllers
         {
             int pageSize = 30;
             int pageNumber = page == null || page < 0 ? 1 : page.Value;
+
             search = search.ToLower();
             ViewBag.search = search;
-            var listItem = db.TbTinTucs.AsNoTracking().Where(x => x.TieuDe.ToLower().Contains(search)).OrderBy(x => x.MaTinTuc).ToList();
+
+            var listItem = _context.TbTinTucs.AsNoTracking().Where(x => x.TieuDe.ToLower().Contains(search)).OrderBy(x => x.MaTinTuc).ToList();
             PagedList<TbTinTuc> pagedListItem = new PagedList<TbTinTuc>(listItem, pageNumber, pageSize);
+
             return View(pagedListItem);
         }
 
@@ -45,7 +55,8 @@ namespace Web_CuaHangCafe.Areas.Admin.Controllers
         [HttpGet]
         public IActionResult Create()
         {
-            ViewBag.NguoiDang = new SelectList(db.TbQuanTriViens.ToList(), "TenNguoiDung", "TenNguoiDung");
+            ViewBag.NguoiDang = new SelectList(_context.TbQuanTriViens.ToList(), "TenNguoiDung", "TenNguoiDung");
+
             return View();
         }
 
@@ -55,9 +66,11 @@ namespace Web_CuaHangCafe.Areas.Admin.Controllers
         [ValidateAntiForgeryToken]
         public IActionResult Create(TbTinTuc tinTuc)
         {
-            db.TbTinTucs.Add(tinTuc);
-            db.SaveChanges();
+            _context.TbTinTucs.Add(tinTuc);
+            _context.SaveChanges();
+
             TempData["Message"] = "Thêm thành công";
+
             return RedirectToAction("Index", "NewsManage");
         }
 
@@ -66,8 +79,9 @@ namespace Web_CuaHangCafe.Areas.Admin.Controllers
         [HttpGet]
         public IActionResult Details(int id, string name)
         {
-            var tinTuc = db.TbTinTucs.SingleOrDefault(x => x.MaTinTuc == id);
+            var tinTuc = _context.TbTinTucs.SingleOrDefault(x => x.MaTinTuc == id);
             ViewBag.name = name;
+
             return View(tinTuc);
         }
 
@@ -76,9 +90,11 @@ namespace Web_CuaHangCafe.Areas.Admin.Controllers
         [HttpGet]
         public IActionResult Edit(int id, string name)
         {
-            ViewBag.NguoiDang = new SelectList(db.TbQuanTriViens.ToList(), "TenNguoiDung", "TenNguoiDung");
-            var tinTuc = db.TbTinTucs.Find(id);
+            var tinTuc = _context.TbTinTucs.Find(id);
+
+            ViewBag.NguoiDang = new SelectList(_context.TbQuanTriViens.ToList(), "TenNguoiDung", "TenNguoiDung");
             ViewBag.name = name;
+
             return View(tinTuc);
         }
 
@@ -88,9 +104,11 @@ namespace Web_CuaHangCafe.Areas.Admin.Controllers
         [ValidateAntiForgeryToken]
         public IActionResult Edit(TbTinTuc tinTuc)
         {
-            db.Entry(tinTuc).State = EntityState.Modified;
-            db.SaveChanges();
+            _context.Entry(tinTuc).State = EntityState.Modified;
+            _context.SaveChanges();
+
             TempData["Message"] = "Sửa thành công";
+
             return RedirectToAction("Index", "NewsManage");
         }
 
@@ -100,9 +118,12 @@ namespace Web_CuaHangCafe.Areas.Admin.Controllers
         public IActionResult Delete(int id)
         {
             TempData["Message"] = "";
-            db.Remove(db.TbTinTucs.Find(id));
-            db.SaveChanges();
+
+            _context.Remove(_context.TbTinTucs.Find(id));
+            _context.SaveChanges();
+
             TempData["Message"] = "Xoá thành công";
+
             return RedirectToAction("Index", "NewsManage");
         }
     }

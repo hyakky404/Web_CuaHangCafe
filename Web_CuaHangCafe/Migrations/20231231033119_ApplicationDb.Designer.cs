@@ -5,15 +5,15 @@ using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
 using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
-using Web_CuaHangCafe.Models;
+using Web_CuaHangCafe.Data;
 
 #nullable disable
 
 namespace Web_CuaHangCafe.Migrations
 {
-    [DbContext(typeof(QlcuaHangCafeContext))]
-    [Migration("20231214113012_QLCuaHangCafe")]
-    partial class QLCuaHangCafe
+    [DbContext(typeof(ApplicationDbContext))]
+    [Migration("20231231033119_ApplicationDb")]
+    partial class ApplicationDb
     {
         /// <inheritdoc />
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
@@ -30,8 +30,8 @@ namespace Web_CuaHangCafe.Migrations
                     b.Property<int>("MaSanPham")
                         .HasColumnType("int");
 
-                    b.Property<int>("MaHoaDon")
-                        .HasColumnType("int");
+                    b.Property<Guid>("MaHoaDon")
+                        .HasColumnType("uniqueidentifier");
 
                     b.Property<decimal?>("GiaBan")
                         .HasColumnType("money");
@@ -46,7 +46,7 @@ namespace Web_CuaHangCafe.Migrations
                         .HasColumnType("money");
 
                     b.HasKey("MaSanPham", "MaHoaDon")
-                        .HasName("PK__tbChiTie__52F2A93E8754DC13");
+                        .HasName("PK__tbChiTie__52F2A93ED9FFE6AD");
 
                     b.HasIndex("MaHoaDon");
 
@@ -55,14 +55,11 @@ namespace Web_CuaHangCafe.Migrations
 
             modelBuilder.Entity("Web_CuaHangCafe.Models.TbHoaDonBan", b =>
                 {
-                    b.Property<int>("MaHoaDon")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("int");
+                    b.Property<Guid>("MaHoaDon")
+                        .HasColumnType("uniqueidentifier");
 
-                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("MaHoaDon"));
-
-                    b.Property<int>("CustomerId")
-                        .HasColumnType("int");
+                    b.Property<Guid>("CustomerId")
+                        .HasColumnType("uniqueidentifier");
 
                     b.Property<DateTime?>("NgayBan")
                         .HasColumnType("datetime");
@@ -76,11 +73,11 @@ namespace Web_CuaHangCafe.Migrations
                         .HasColumnType("money");
 
                     b.HasKey("MaHoaDon")
-                        .HasName("PK__tbHoaDon__835ED13B89D69891");
+                        .HasName("PK__tbHoaDon__835ED13BE78BDB82");
 
                     b.HasIndex("CustomerId");
 
-                    b.HasIndex(new[] { "SoHoaDon" }, "UQ__tbHoaDon__012E9E535A9D96B4")
+                    b.HasIndex(new[] { "SoHoaDon" }, "UQ__tbHoaDon__012E9E53087434A1")
                         .IsUnique();
 
                     b.ToTable("tbHoaDonBan", (string)null);
@@ -88,11 +85,8 @@ namespace Web_CuaHangCafe.Migrations
 
             modelBuilder.Entity("Web_CuaHangCafe.Models.TbKhachHang", b =>
                 {
-                    b.Property<int>("Id")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("int");
-
-                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
+                    b.Property<Guid>("Id")
+                        .HasColumnType("uniqueidentifier");
 
                     b.Property<string>("DiaChi")
                         .IsRequired()
@@ -110,7 +104,7 @@ namespace Web_CuaHangCafe.Migrations
                         .HasColumnType("nvarchar(50)");
 
                     b.HasKey("Id")
-                        .HasName("PK__tbKhachH__3214EC07E272D188");
+                        .HasName("PK__tbKhachH__3214EC0779854367");
 
                     b.ToTable("tbKhachHang", (string)null);
                 });
@@ -131,7 +125,7 @@ namespace Web_CuaHangCafe.Migrations
                         .HasColumnName("TenNhomSP");
 
                     b.HasKey("MaNhomSp")
-                        .HasName("PK__tbNhomSa__5A1AD2F90CEB8C80");
+                        .HasName("PK__tbNhomSa__5A1AD2F985F055E7");
 
                     b.ToTable("tbNhomSanPham", (string)null);
                 });
@@ -156,9 +150,6 @@ namespace Web_CuaHangCafe.Migrations
                         .HasMaxLength(50)
                         .HasColumnType("nvarchar(50)");
 
-                    b.HasKey("MaPhanHoi")
-                        .HasName("PK__tbPhanHo__3458D20F668DD392");
-
                     b.ToTable("tbPhanHoi", (string)null);
                 });
 
@@ -178,9 +169,6 @@ namespace Web_CuaHangCafe.Migrations
                         .IsRequired()
                         .HasMaxLength(50)
                         .HasColumnType("nvarchar(50)");
-
-                    b.HasKey("Id")
-                        .HasName("PK__tbQuanTr__3214EC070466D30A");
 
                     b.ToTable("tbQuanTriVien", (string)null);
                 });
@@ -215,7 +203,7 @@ namespace Web_CuaHangCafe.Migrations
                         .HasColumnType("nvarchar(255)");
 
                     b.HasKey("MaSanPham")
-                        .HasName("PK__tbSanPha__FAC7442D60347826");
+                        .HasName("PK__tbSanPha__FAC7442DA6D9D8DC");
 
                     b.HasIndex("MaNhomSp");
 
@@ -245,7 +233,7 @@ namespace Web_CuaHangCafe.Migrations
                         .HasColumnType("nvarchar(255)");
 
                     b.HasKey("MaTinTuc")
-                        .HasName("PK__tbTinTuc__B53648C0282A51C8");
+                        .HasName("PK__tbTinTuc__B53648C018B441C9");
 
                     b.ToTable("tbTinTuc", (string)null);
                 });
@@ -256,13 +244,13 @@ namespace Web_CuaHangCafe.Migrations
                         .WithMany("TbChiTietHoaDonBans")
                         .HasForeignKey("MaHoaDon")
                         .IsRequired()
-                        .HasConstraintName("FK__tbChiTiet__MaHoa__45F365D3");
+                        .HasConstraintName("FK__tbChiTiet__MaHoa__440B1D61");
 
                     b.HasOne("Web_CuaHangCafe.Models.TbSanPham", "MaSanPhamNavigation")
                         .WithMany("TbChiTietHoaDonBans")
                         .HasForeignKey("MaSanPham")
                         .IsRequired()
-                        .HasConstraintName("FK__tbChiTiet__MaSan__46E78A0C");
+                        .HasConstraintName("FK__tbChiTiet__MaSan__44FF419A");
 
                     b.Navigation("MaHoaDonNavigation");
 
@@ -275,7 +263,7 @@ namespace Web_CuaHangCafe.Migrations
                         .WithMany("TbHoaDonBans")
                         .HasForeignKey("CustomerId")
                         .IsRequired()
-                        .HasConstraintName("FK__tbHoaDonB__Custo__47DBAE45");
+                        .HasConstraintName("FK__tbHoaDonB__Custo__45F365D3");
 
                     b.Navigation("Customer");
                 });
@@ -286,7 +274,7 @@ namespace Web_CuaHangCafe.Migrations
                         .WithMany("TbSanPhams")
                         .HasForeignKey("MaNhomSp")
                         .IsRequired()
-                        .HasConstraintName("FK__tbSanPham__MaNho__48CFD27E");
+                        .HasConstraintName("FK__tbSanPham__MaNho__46E78A0C");
 
                     b.Navigation("MaNhomSpNavigation");
                 });

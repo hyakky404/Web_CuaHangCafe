@@ -1,18 +1,18 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
-using Microsoft.AspNetCore.Mvc;
+﻿using Microsoft.AspNetCore.Mvc;
 using Web_CuaHangCafe.Models;
 using Web_CuaHangCafe.Helpers;
-using Web_CuaHangCafe.ViewModels;
-using Microsoft.EntityFrameworkCore;
+using Web_CuaHangCafe.Data;
 
 namespace Web_CuaHangCafe.Controllers
 {
     public class ShopCartController : Controller
     {
-        QlcuaHangCafeContext db = new QlcuaHangCafeContext();
+        private readonly ApplicationDbContext _context;
+
+        public ShopCartController(ApplicationDbContext context)
+        {
+            _context = context;
+        }
 
         public List<CartItem> Carts
         {
@@ -55,7 +55,7 @@ namespace Web_CuaHangCafe.Controllers
 
             if (item == null)
             {
-                var hangHoa = db.TbSanPhams.SingleOrDefault(p => p.MaSanPham == id);
+                var hangHoa = _context.TbSanPhams.SingleOrDefault(p => p.MaSanPham == id);
 
                 item = new CartItem
                 {
@@ -118,8 +118,8 @@ namespace Web_CuaHangCafe.Controllers
                     DiaChi = address
                 };
 
-                db.TbKhachHangs.Add(_customer);
-                db.SaveChanges();
+                _context.TbKhachHangs.Add(_customer);
+                _context.SaveChanges();
 
                 // Tạo hoá đơn
                 var order = new TbHoaDonBan
@@ -131,8 +131,8 @@ namespace Web_CuaHangCafe.Controllers
                     CustomerId = customerId
                 };
 
-                db.TbHoaDonBans.Add(order);
-                db.SaveChanges();
+                _context.TbHoaDonBans.Add(order);
+                _context.SaveChanges();
 
                 foreach (var cartItem in cartItems)
                 {
@@ -146,8 +146,8 @@ namespace Web_CuaHangCafe.Controllers
                         ThanhTien = cartItem.ThanhTien
                     };
 
-                    db.TbChiTietHoaDonBans.Add(orderDetails);
-                    db.SaveChanges();
+                    _context.TbChiTietHoaDonBans.Add(orderDetails);
+                    _context.SaveChanges();
                 }
 
                 // Xóa giỏ hàng sau khi tạo hoá đơn
@@ -172,130 +172,5 @@ namespace Web_CuaHangCafe.Controllers
         {
             return View();
         }
-
-        // Phương thức cập nhật số lượng sản phẩm trong giỏ hàng
-        //[HttpPost]
-        //public IActionResult UpdateCartItem(string id, int quantity)
-        //{
-        //    // Lấy thông tin sản phẩm từ cơ sở dữ liệu hoặc từ nơi lưu trữ sản phẩm
-        //    var myCart = Carts;
-        //    var item = myCart.SingleOrDefault(p => p.MaSp == id);
-
-        //    if (item != null)
-        //    {
-        //        // Lấy thông tin giỏ hàng từ Session (nếu đã tồn tại)
-        //        List<CartItem> cart = HttpContext.Session.Get<List<CartItem>>("GioHang") ?? new List<CartItem>();
-
-        //        // Tìm sản phẩm trong giỏ hàng
-        //        CartItem existingCartItem = myCart.FirstOrDefault(item => item.MaSp == id);
-
-        //        if (existingCartItem != null)
-        //        {
-        //            // Cập nhật số lượng sản phẩm
-        //            existingCartItem.SoLuong = quantity;
-
-        //            // Cập nhật giá trị sản phẩm trong giỏ hàng
-        //            existingCartItem.DonGia = item.DonGia * quantity;
-
-        //            // Cập nhật thông tin giỏ hàng trong Session
-        //            HttpContext.Session.Set("GioHang", myCart);
-        //        }
-        //    }
-
-        //    // Chuyển hướng người dùng trở lại trang giỏ hàng
-        //    return RedirectToAction("Index", "GioHang");
-        //}
-
-        //public decimal CalculateTotalPrice()
-        //{
-        //    List<CartItem> cartItems = HttpContext.Session.Get<List<CartItem>>("GioHang") ?? new List<CartItem>();
-        //    decimal totalPrice = 0;
-        //    foreach (var cartItem in cartItems)
-        //    {
-        //        totalPrice += cartItem.DonGia * cartItem.SoLuong;
-        //    }
-        //    return totalPrice;
-        //}
-        ///
-
-        //// Action để hiển thị giỏ hàng
-        //public IActionResult Index()
-        //{
-        //    var cartItems = GetCartItems();
-        //    return View(cartItems);
-        //}
-
-        //// Action để thêm sản phẩm vào giỏ hàng
-        //[HttpPost]
-        //public IActionResult AddToCart(int id, int quantity)
-        //{
-        //    var productItem = db.TbSanPhams.SingleOrDefault(x => x.MaSanPham == id);
-
-        //    var item = new CartItem
-        //    {
-        //        ProductId = id,
-        //        ProductName = productItem.TenSanPham,
-        //        Price = productItem.GiaBan,
-        //        ProductImage = productItem.HinhAnh,
-        //        Quantity = quantity
-        //    };
-
-        //    AddItemToCart(item);
-
-        //    // Chuyển hướng về trang giỏ hàng
-        //    return RedirectToAction("Index");
-        //}
-
-        //// Action để xóa sản phẩm khỏi giỏ hàng
-        //public IActionResult RemoveFromCart(int productId)
-        //{
-        //    RemoveItemFromCart(productId);
-        //    return RedirectToAction("Index");
-        //}
-
-        //// Phương thức để lấy giỏ hàng từ Session
-        //private List<CartItem> GetCartItems()
-        //{
-        //    var sessionCart = HttpContext.Session.Get<List<CartItem>>("Cart");
-        //    return sessionCart ?? new List<CartItem>();
-        //}
-
-        //// Phương thức để thêm sản phẩm vào giỏ hàng trong Session
-        //private void AddItemToCart(CartItem item)
-        //{
-        //    var cart = GetCartItems();
-
-        //    var existingItem = cart.FirstOrDefault(i => i.ProductId == item.ProductId);
-
-        //    if (existingItem != null)
-        //    {
-        //        existingItem.Quantity += item.Quantity;
-        //    }
-        //    else
-        //    {
-        //        cart.Add(item);
-        //    }
-
-        //    SaveCart(cart);
-        //}
-
-        //// Phương thức để xóa sản phẩm khỏi giỏ hàng trong Session
-        //private void RemoveItemFromCart(int productId)
-        //{
-        //    var cart = GetCartItems();
-        //    var itemToRemove = cart.FirstOrDefault(i => i.ProductId == productId);
-
-        //    if (itemToRemove != null)
-        //    {
-        //        cart.Remove(itemToRemove);
-        //        SaveCart(cart);
-        //    }
-        //}
-
-        //// Phương thức để lưu giỏ hàng vào Session
-        //private void SaveCart(List<CartItem> cart)
-        //{
-        //    HttpContext.Session.Set("Cart", cart);
-        //}
     }
 }

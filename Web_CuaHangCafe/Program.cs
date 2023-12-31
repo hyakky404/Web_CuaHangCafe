@@ -1,5 +1,5 @@
 using Microsoft.EntityFrameworkCore;
-using Web_CuaHangCafe.Models;
+using Web_CuaHangCafe.Data;
 using Web_CuaHangCafe.Repository;
 
 var builder = WebApplication.CreateBuilder(args);
@@ -7,8 +7,8 @@ var builder = WebApplication.CreateBuilder(args);
 // Add services to the container.
 builder.Services.AddControllersWithViews();
 
-var connectionString = builder.Configuration.GetConnectionString("QlcuaHangCafeContext");
-builder.Services.AddDbContext<QlcuaHangCafeContext>(x => x.UseSqlServer(connectionString));
+var connectionString = builder.Configuration.GetConnectionString("DefaultConnection") ?? throw new InvalidOperationException("Connection string 'DefaultConnection' not found.");
+builder.Services.AddDbContext<ApplicationDbContext>(x => x.UseSqlServer(connectionString));
 builder.Services.AddScoped<INhomSpRepository, NhomSpRepository>();
 builder.Services.AddScoped<ShoppingCartSummaryViewComponent>();
 

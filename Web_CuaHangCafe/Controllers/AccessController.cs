@@ -1,13 +1,19 @@
 ﻿using Microsoft.AspNetCore.Mvc;
 using System.Security.Cryptography;
 using System.Text;
+using Web_CuaHangCafe.Data;
 using Web_CuaHangCafe.Models;
 
 namespace Web_CuaHangCafe.Controllers
 {
     public class AccessController : Controller
     {
-        QlcuaHangCafeContext db = new QlcuaHangCafeContext();
+        private readonly ApplicationDbContext _context;
+
+        public AccessController(ApplicationDbContext context)
+        {
+            _context = context;
+        }
 
         public static string HashPassword(string password)
         {
@@ -50,7 +56,7 @@ namespace Web_CuaHangCafe.Controllers
 
             if (HttpContext.Session.GetString("TenNguoiDung") == null)
             {
-                var u = db.TbQuanTriViens.Where(x => x.TenNguoiDung.Equals(user.TenNguoiDung) && x.MatKhau.Equals(hashPassword)).FirstOrDefault();
+                var u = _context.TbQuanTriViens.Where(x => x.TenNguoiDung.Equals(user.TenNguoiDung) && x.MatKhau.Equals(hashPassword)).FirstOrDefault();
 
                 if (u != null)
                 {
@@ -66,6 +72,7 @@ namespace Web_CuaHangCafe.Controllers
         {
             HttpContext.Session.Clear();
             HttpContext.Session.Remove("TenNguoiDung");
+
             return RedirectToAction("Login", "Access");
         }
     }

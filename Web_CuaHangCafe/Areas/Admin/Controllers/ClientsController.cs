@@ -1,7 +1,6 @@
-﻿using Azure;
-using Microsoft.AspNetCore.Mvc;
-using Microsoft.AspNetCore.Mvc.Rendering;
+﻿using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
+using Web_CuaHangCafe.Data;
 using Web_CuaHangCafe.Models;
 using Web_CuaHangCafe.Models.Authentication;
 using X.PagedList;
@@ -12,7 +11,12 @@ namespace Web_CuaHangCafe.Areas.Admin.Controllers
     [Route("Admin/Clients")]
     public class ClientsController : Controller
     {
-        QlcuaHangCafeContext db = new QlcuaHangCafeContext();
+        private readonly ApplicationDbContext _context;
+
+        public ClientsController(ApplicationDbContext context)
+        {
+            _context = context;
+        }
 
         [Route("")]
         [Route("Index")]
@@ -21,8 +25,9 @@ namespace Web_CuaHangCafe.Areas.Admin.Controllers
         {
             int pageSize = 30;
             int pageNumber = page == null || page < 0 ? 1 : page.Value;
-            var listItem = db.TbKhachHangs.AsNoTracking().OrderBy(x => x.SdtkhachHang).ToList();
+            var listItem = _context.TbKhachHangs.AsNoTracking().OrderBy(x => x.SdtkhachHang).ToList();
             PagedList<TbKhachHang> pagedListItem = new PagedList<TbKhachHang>(listItem, pageNumber, pageSize);
+
             return View(pagedListItem);
         }
 
@@ -33,10 +38,13 @@ namespace Web_CuaHangCafe.Areas.Admin.Controllers
         {
             int pageSize = 30;
             int pageNumber = page == null || page < 0 ? 1 : page.Value;
+
             search = search.ToLower();
             ViewBag.search = search;
-            var listItem = db.TbKhachHangs.AsNoTracking().Where(x => x.TenKhachHang.ToLower().Contains(search)).OrderBy(x => x.SdtkhachHang).ToList();
+
+            var listItem = _context.TbKhachHangs.AsNoTracking().Where(x => x.TenKhachHang.ToLower().Contains(search)).OrderBy(x => x.SdtkhachHang).ToList();
             PagedList<TbKhachHang> pagedListItem = new PagedList<TbKhachHang>(listItem, pageNumber, pageSize);
+
             return View(pagedListItem);
         }
 
@@ -54,9 +62,11 @@ namespace Web_CuaHangCafe.Areas.Admin.Controllers
         [ValidateAntiForgeryToken]
         public IActionResult Create(TbKhachHang khachHang)
         {
-            db.TbKhachHangs.Add(khachHang);
-            db.SaveChanges();
+            _context.TbKhachHangs.Add(khachHang);
+            _context.SaveChanges();
+
             TempData["Message"] = "Thêm thành công";
+
             return RedirectToAction("Index", "Clients");
         }
 
@@ -65,8 +75,9 @@ namespace Web_CuaHangCafe.Areas.Admin.Controllers
         [HttpGet]
         public IActionResult Edit(int id, string name)
         {
-            var khachHang = db.TbKhachHangs.Find(id);
+            var khachHang = _context.TbKhachHangs.Find(id);
             ViewBag.name = name;
+
             return View(khachHang);
         }
 
@@ -76,9 +87,11 @@ namespace Web_CuaHangCafe.Areas.Admin.Controllers
         [ValidateAntiForgeryToken]
         public IActionResult Edit(TbKhachHang khachHang)
         {
-            db.Entry(khachHang).State = EntityState.Modified;
-            db.SaveChanges();
+            _context.Entry(khachHang).State = EntityState.Modified;
+            _context.SaveChanges();
+
             TempData["Message"] = "Sửa thành công";
+
             return RedirectToAction("Index", "Clients");
         }
 
@@ -88,7 +101,8 @@ namespace Web_CuaHangCafe.Areas.Admin.Controllers
         public IActionResult Delete(string id)
         {
             TempData["Message"] = "";
-            var hoaDon = db.TbHoaDonBans.Where(x => x.MaHoaDon == Guid.Parse(id)).ToList();
+
+            var hoaDon = _context.TbHoaDonBans.Where(x => x.MaHoaDon == Guid.Parse(id)).ToList();
 
             if (hoaDon.Count() > 0)
             {
@@ -96,9 +110,11 @@ namespace Web_CuaHangCafe.Areas.Admin.Controllers
                 return RedirectToAction("Index", "Clients");
             }
 
-            db.Remove(db.TbKhachHangs.Find(id));
-            db.SaveChanges();
+            _context.Remove(_context.TbKhachHangs.Find(id));
+            _context.SaveChanges();
+
             TempData["Message"] = "Xoá thành công";
+
             return RedirectToAction("Index", "Clients");
         }
     }

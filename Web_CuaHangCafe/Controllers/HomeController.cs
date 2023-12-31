@@ -1,29 +1,31 @@
 ﻿using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using System.Diagnostics;
-using System.Dynamic;
 using Web_CuaHangCafe.Models;
 using Web_CuaHangCafe.MergeData;
+using Web_CuaHangCafe.Data;
 
 namespace Web_CuaHangCafe.Controllers
 {
     public class HomeController : Controller
     {
         private readonly ILogger<HomeController> _logger;
-        QlcuaHangCafeContext db = new QlcuaHangCafeContext();
+        private readonly ApplicationDbContext _context;
 
-        public HomeController(ILogger<HomeController> logger)
+        public HomeController(ILogger<HomeController> logger, ApplicationDbContext context)
         {
             _logger = logger;
+            _context = context;
         }
 
         public IActionResult Index()
         {
             MergeModel value = new MergeModel();
-            var lstProducts = db.TbSanPhams.AsNoTracking().OrderBy(x => x.MaSanPham).Take(8).ToList();
-            var lstNews = db.TbTinTucs.AsNoTracking().OrderByDescending(x => x.NgayDang).Take(3).ToList();
+            var lstProducts = _context.TbSanPhams.AsNoTracking().OrderBy(x => x.MaSanPham).Take(8).ToList();
+            var lstNews = _context.TbTinTucs.AsNoTracking().OrderByDescending(x => x.NgayDang).Take(3).ToList();
             value.lstSanPham = lstProducts;
             value.lstTinTuc = lstNews;
+
             return View(value);
         }
 

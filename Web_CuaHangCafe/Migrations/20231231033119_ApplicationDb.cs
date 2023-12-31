@@ -6,7 +6,7 @@ using Microsoft.EntityFrameworkCore.Migrations;
 namespace Web_CuaHangCafe.Migrations
 {
     /// <inheritdoc />
-    public partial class QLCuaHangCafe : Migration
+    public partial class ApplicationDb : Migration
     {
         /// <inheritdoc />
         protected override void Up(MigrationBuilder migrationBuilder)
@@ -15,15 +15,14 @@ namespace Web_CuaHangCafe.Migrations
                 name: "tbKhachHang",
                 columns: table => new
                 {
-                    Id = table.Column<int>(type: "int", nullable: false)
-                        .Annotation("SqlServer:Identity", "1, 1"),
+                    Id = table.Column<Guid>(type: "uniqueidentifier", nullable: false),
                     TenKhachHang = table.Column<string>(type: "nvarchar(50)", maxLength: 50, nullable: false),
                     SDTKhachHang = table.Column<string>(type: "nvarchar(10)", maxLength: 10, nullable: false),
                     DiaChi = table.Column<string>(type: "nvarchar(max)", nullable: false)
                 },
                 constraints: table =>
                 {
-                    table.PrimaryKey("PK__tbKhachH__3214EC07E272D188", x => x.Id);
+                    table.PrimaryKey("PK__tbKhachH__3214EC0779854367", x => x.Id);
                 });
 
             migrationBuilder.CreateTable(
@@ -36,7 +35,7 @@ namespace Web_CuaHangCafe.Migrations
                 },
                 constraints: table =>
                 {
-                    table.PrimaryKey("PK__tbNhomSa__5A1AD2F90CEB8C80", x => x.MaNhomSP);
+                    table.PrimaryKey("PK__tbNhomSa__5A1AD2F985F055E7", x => x.MaNhomSP);
                 });
 
             migrationBuilder.CreateTable(
@@ -51,7 +50,6 @@ namespace Web_CuaHangCafe.Migrations
                 },
                 constraints: table =>
                 {
-                    table.PrimaryKey("PK__tbPhanHo__3458D20F668DD392", x => x.MaPhanHoi);
                 });
 
             migrationBuilder.CreateTable(
@@ -65,7 +63,6 @@ namespace Web_CuaHangCafe.Migrations
                 },
                 constraints: table =>
                 {
-                    table.PrimaryKey("PK__tbQuanTr__3214EC070466D30A", x => x.Id);
                 });
 
             migrationBuilder.CreateTable(
@@ -81,25 +78,24 @@ namespace Web_CuaHangCafe.Migrations
                 },
                 constraints: table =>
                 {
-                    table.PrimaryKey("PK__tbTinTuc__B53648C0282A51C8", x => x.MaTinTuc);
+                    table.PrimaryKey("PK__tbTinTuc__B53648C018B441C9", x => x.MaTinTuc);
                 });
 
             migrationBuilder.CreateTable(
                 name: "tbHoaDonBan",
                 columns: table => new
                 {
-                    MaHoaDon = table.Column<int>(type: "int", nullable: false)
-                        .Annotation("SqlServer:Identity", "1, 1"),
+                    MaHoaDon = table.Column<Guid>(type: "uniqueidentifier", nullable: false),
                     SoHoaDon = table.Column<string>(type: "nvarchar(14)", maxLength: 14, nullable: false),
                     NgayBan = table.Column<DateTime>(type: "datetime", nullable: true),
                     TongTien = table.Column<decimal>(type: "money", nullable: true),
-                    CustomerId = table.Column<int>(type: "int", nullable: false)
+                    CustomerId = table.Column<Guid>(type: "uniqueidentifier", nullable: false)
                 },
                 constraints: table =>
                 {
-                    table.PrimaryKey("PK__tbHoaDon__835ED13B89D69891", x => x.MaHoaDon);
+                    table.PrimaryKey("PK__tbHoaDon__835ED13BE78BDB82", x => x.MaHoaDon);
                     table.ForeignKey(
-                        name: "FK__tbHoaDonB__Custo__47DBAE45",
+                        name: "FK__tbHoaDonB__Custo__45F365D3",
                         column: x => x.CustomerId,
                         principalTable: "tbKhachHang",
                         principalColumn: "Id");
@@ -120,9 +116,9 @@ namespace Web_CuaHangCafe.Migrations
                 },
                 constraints: table =>
                 {
-                    table.PrimaryKey("PK__tbSanPha__FAC7442D60347826", x => x.MaSanPham);
+                    table.PrimaryKey("PK__tbSanPha__FAC7442DA6D9D8DC", x => x.MaSanPham);
                     table.ForeignKey(
-                        name: "FK__tbSanPham__MaNho__48CFD27E",
+                        name: "FK__tbSanPham__MaNho__46E78A0C",
                         column: x => x.MaNhomSP,
                         principalTable: "tbNhomSanPham",
                         principalColumn: "MaNhomSP");
@@ -132,7 +128,7 @@ namespace Web_CuaHangCafe.Migrations
                 name: "tbChiTietHoaDonBan",
                 columns: table => new
                 {
-                    MaHoaDon = table.Column<int>(type: "int", nullable: false),
+                    MaHoaDon = table.Column<Guid>(type: "uniqueidentifier", nullable: false),
                     MaSanPham = table.Column<int>(type: "int", nullable: false),
                     GiaBan = table.Column<decimal>(type: "money", nullable: true),
                     GiamGia = table.Column<int>(type: "int", nullable: true),
@@ -141,14 +137,14 @@ namespace Web_CuaHangCafe.Migrations
                 },
                 constraints: table =>
                 {
-                    table.PrimaryKey("PK__tbChiTie__52F2A93E8754DC13", x => new { x.MaSanPham, x.MaHoaDon });
+                    table.PrimaryKey("PK__tbChiTie__52F2A93ED9FFE6AD", x => new { x.MaSanPham, x.MaHoaDon });
                     table.ForeignKey(
-                        name: "FK__tbChiTiet__MaHoa__45F365D3",
+                        name: "FK__tbChiTiet__MaHoa__440B1D61",
                         column: x => x.MaHoaDon,
                         principalTable: "tbHoaDonBan",
                         principalColumn: "MaHoaDon");
                     table.ForeignKey(
-                        name: "FK__tbChiTiet__MaSan__46E78A0C",
+                        name: "FK__tbChiTiet__MaSan__44FF419A",
                         column: x => x.MaSanPham,
                         principalTable: "tbSanPham",
                         principalColumn: "MaSanPham");
@@ -165,7 +161,7 @@ namespace Web_CuaHangCafe.Migrations
                 column: "CustomerId");
 
             migrationBuilder.CreateIndex(
-                name: "UQ__tbHoaDon__012E9E535A9D96B4",
+                name: "UQ__tbHoaDon__012E9E53087434A1",
                 table: "tbHoaDonBan",
                 column: "SoHoaDon",
                 unique: true);

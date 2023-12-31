@@ -1,11 +1,17 @@
 ﻿using Microsoft.AspNetCore.Mvc;
+using Web_CuaHangCafe.Data;
 using Web_CuaHangCafe.Models;
 
 namespace Web_CuaHangCafe.Controllers
 {
     public class ContactController : Controller
     {
-        QlcuaHangCafeContext db = new QlcuaHangCafeContext();
+        private readonly ApplicationDbContext _context;
+
+        public ContactController(ApplicationDbContext context)
+        {
+            _context = context;
+        }
 
         public IActionResult Index()
         {
@@ -20,8 +26,8 @@ namespace Web_CuaHangCafe.Controllers
             {
                 try
                 {
-                    db.TbPhanHois.Add(phanHoi);
-                    db.SaveChanges();
+                    _context.TbPhanHois.Add(phanHoi);
+                    _context.SaveChanges();
                     TempData["Status"] = "success";
                     TempData["Message"] = "Gửi thành công";
                     return RedirectToAction("index");

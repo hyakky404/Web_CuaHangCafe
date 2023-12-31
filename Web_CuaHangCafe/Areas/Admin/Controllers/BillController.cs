@@ -1,7 +1,6 @@
-﻿using Azure;
-using Microsoft.AspNetCore.Mvc;
-using Microsoft.AspNetCore.Mvc.RazorPages;
+﻿using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
+using Web_CuaHangCafe.Data;
 using Web_CuaHangCafe.Models;
 using Web_CuaHangCafe.Models.Authentication;
 using X.PagedList;
@@ -12,7 +11,12 @@ namespace Web_CuaHangCafe.Areas.Admin.Controllers
     [Route("Admin/Bill")]
     public class BillController : Controller
     {
-        QlcuaHangCafeContext db = new QlcuaHangCafeContext();
+        private readonly ApplicationDbContext _context;
+
+        public BillController(ApplicationDbContext context)
+        {
+            _context = context;
+        }
 
         [Route("")]
         [Route("Index")]
@@ -21,8 +25,9 @@ namespace Web_CuaHangCafe.Areas.Admin.Controllers
         {
             int pageSize = 30;
             int pageNumber = page == null || page < 0 ? 1 : page.Value;
-            var listItem = db.TbHoaDonBans.AsNoTracking().OrderByDescending(x => x.NgayBan).ToList();
+            var listItem = _context.TbHoaDonBans.AsNoTracking().OrderByDescending(x => x.NgayBan).ToList();
             PagedList<TbHoaDonBan> pagedListItem = new PagedList<TbHoaDonBan>(listItem, pageNumber, pageSize);
+
             return View(pagedListItem);
         }
 
@@ -33,9 +38,12 @@ namespace Web_CuaHangCafe.Areas.Admin.Controllers
         {
             int pageSize = 30;
             int pageNumber = page == null || page < 0 ? 1 : page.Value;
+
             ViewBag.search = search;
-            var listItem = db.TbHoaDonBans.AsNoTracking().Where(x => x.NgayBan.Value.ToString().Contains(search)).OrderBy(x => x.MaHoaDon).ToList();
+
+            var listItem = _context.TbHoaDonBans.AsNoTracking().Where(x => x.NgayBan.Value.ToString().Contains(search)).OrderBy(x => x.MaHoaDon).ToList();
             PagedList<TbHoaDonBan> pagedListItem = new PagedList<TbHoaDonBan>(listItem, pageNumber, pageSize);
+
             return View(pagedListItem);
         }
 
@@ -46,9 +54,11 @@ namespace Web_CuaHangCafe.Areas.Admin.Controllers
         {
             int pageSize = 30;
             int pageNumber = page == null || page < 0 ? 1 : page.Value;
-            var listItem = db.TbChiTietHoaDonBans.AsNoTracking().Where(x => x.MaHoaDon == Guid.Parse(id)).OrderBy(x => x.MaHoaDon).ToList();
+            var listItem = _context.TbChiTietHoaDonBans.AsNoTracking().Where(x => x.MaHoaDon == Guid.Parse(id)).OrderBy(x => x.MaHoaDon).ToList();
             PagedList<TbChiTietHoaDonBan> pagedListItem = new PagedList<TbChiTietHoaDonBan>(listItem, pageNumber, pageSize);
+
             ViewBag.name = name;
+
             return View(pagedListItem);
         }
     }

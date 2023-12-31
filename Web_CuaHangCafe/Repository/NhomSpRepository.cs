@@ -1,12 +1,13 @@
-﻿using Web_CuaHangCafe.Models;
+﻿using Web_CuaHangCafe.Data;
+using Web_CuaHangCafe.Models;
 
 namespace Web_CuaHangCafe.Repository
 {
     public class NhomSpRepository : INhomSpRepository
     {
-        private readonly QlcuaHangCafeContext _context;
+        private readonly ApplicationDbContext _context;
 
-        public NhomSpRepository(QlcuaHangCafeContext context)
+        public NhomSpRepository(ApplicationDbContext context)
         {
             _context = context;
         }

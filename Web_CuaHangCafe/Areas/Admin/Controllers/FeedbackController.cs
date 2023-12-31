@@ -1,5 +1,6 @@
 ﻿using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
+using Web_CuaHangCafe.Data;
 using Web_CuaHangCafe.Models;
 using Web_CuaHangCafe.Models.Authentication;
 using X.PagedList;
@@ -10,7 +11,12 @@ namespace Web_CuaHangCafe.Areas.Admin.Controllers
     [Route("Admin/Feedback")]
     public class FeedbackController : Controller
     {
-        QlcuaHangCafeContext db = new QlcuaHangCafeContext();
+        private readonly ApplicationDbContext _context;
+
+        public FeedbackController(ApplicationDbContext context)
+        {
+            _context = context;
+        }
 
         [Route("")]
         [Route("Index")]
@@ -19,8 +25,9 @@ namespace Web_CuaHangCafe.Areas.Admin.Controllers
         {
             int pageSize = 30;
             int pageNumber = page == null || page < 0 ? 1 : page.Value;
-            var listItem = db.TbPhanHois.AsNoTracking().OrderBy(x => x.MaPhanHoi).ToList();
+            var listItem = _context.TbPhanHois.AsNoTracking().OrderBy(x => x.MaPhanHoi).ToList();
             PagedList<TbPhanHoi> pagedListItem = new PagedList<TbPhanHoi>(listItem, pageNumber, pageSize);
+
             return View(pagedListItem);
         }
 
@@ -31,10 +38,13 @@ namespace Web_CuaHangCafe.Areas.Admin.Controllers
         {
             int pageSize = 30;
             int pageNumber = page == null || page < 0 ? 1 : page.Value;
+
             search = search.ToLower();
             ViewBag.search = search;
-            var listItem = db.TbPhanHois.AsNoTracking().Where(x => x.TieuDe.ToLower().Contains(search)).OrderBy(x => x.MaPhanHoi).ToList();
+
+            var listItem = _context.TbPhanHois.AsNoTracking().Where(x => x.TieuDe.ToLower().Contains(search)).OrderBy(x => x.MaPhanHoi).ToList();
             PagedList<TbPhanHoi> pagedListItem = new PagedList<TbPhanHoi>(listItem, pageNumber, pageSize);
+
             return View(pagedListItem);
         }
 
@@ -43,8 +53,9 @@ namespace Web_CuaHangCafe.Areas.Admin.Controllers
         [HttpGet]
         public IActionResult Details(int id, string name)
         {
-            var phanHoi = db.TbPhanHois.SingleOrDefault(x => x.MaPhanHoi == id);
+            var phanHoi = _context.TbPhanHois.SingleOrDefault(x => x.MaPhanHoi == id);
             ViewBag.name = name;
+
             return View(phanHoi);
         }
 
@@ -54,10 +65,13 @@ namespace Web_CuaHangCafe.Areas.Admin.Controllers
         public IActionResult Delete(int id)
         {
             TempData["Message"] = "";
-            db.Remove(db.TbPhanHois.Find(id));
-            db.SaveChanges();
+
+            _context.Remove(_context.TbPhanHois.Find(id));
+            _context.SaveChanges();
+
             TempData["Message"] = "Xoá thành công";
-            return RedirectToAction("Index", "Feedback");
+
+            return RedirectToAction("Index", "Fee_contextack");
         }
     }
 }
