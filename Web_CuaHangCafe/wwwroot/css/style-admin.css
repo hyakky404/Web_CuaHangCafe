@@ -20443,6 +20443,7 @@ dl {
     font-size: 0.875rem;
     line-height: 1;
     vertical-align: middle;
+    padding: 0 10px;
 }
 
 .sidebar .nav .nav-item .nav-link .badge {

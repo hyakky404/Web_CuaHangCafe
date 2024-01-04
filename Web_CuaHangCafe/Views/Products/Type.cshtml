@@ -1,0 +1,107 @@
+﻿
+@{
+    ViewData["Title"] = "Sản phẩm";
+    ViewData["Products"] = "active";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+@using Web_CuaHangCafe.Models
+@using X.PagedList.Mvc.Core
+@model X.PagedList.IPagedList<TbSanPham>
+
+<!-- Breadcrumb Begin -->
+<div class="breadcrumb-option">
+    <div class="container">
+        <div class="row">
+            <div class="col-lg-12">
+                <div class="breadcrumb__links">
+                    <a asp-controller="home" asp-action="index">
+                        <i class="fa-solid fa-house"></i>
+                        Trang chủ
+                    </a>
+                    <span>Sản phẩm</span>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+<!-- Breadcrumb End -->
+
+<!-- Shop Section Begin -->
+<section class="shop spad">
+    <div class="container">
+        <div class="row">
+            <div class="col-lg-3 col-md-3">
+                <div class="shop__sidebar">
+                    <div class="sidebar__categories">
+                        <div class="section-title">
+                            <h4>Loại sản phẩm</h4>
+                        </div>
+                        @await Component.InvokeAsync("NhomSpMenu")
+                    </div>
+                </div>
+            </div>
+            <div class="col-lg-9 col-md-9">
+                <div class="products-title">
+                    <h4>Danh sách sản phẩm: <span style="color: #ca1515;">@ViewBag.targetName</span></h4>
+                </div>
+
+                <div class="row">
+                    @foreach (var item in Model)
+                    {
+                        <div class="col-lg-4 col-md-6">
+                            <div class="product__item">
+                                <div class="product__item__pic set-bg" data-setbg=@Url.Content("../img/products/" + item.HinhAnh)>
+                                    <ul class="product__hover">
+                                        <li>
+                                            <a href=@Url.Content("../img/products/" + item.HinhAnh) class="image-popup">
+                                                <i class="fa-solid fa-up-right-and-down-left-from-center"></i>
+                                            </a>
+                                        </li>
+                                        <li>
+                                            <a
+                                                asp-controller="cart"
+                                                asp-action="add"
+                                                asp-route-id="@item.MaSanPham"
+                                                asp-route-quantity=1>
+                                                <i class="fa-solid fa-cart-shopping"></i>
+                                            </a>
+                                        </li>
+                                    </ul>
+                                </div>
+                                <div class="product__item__text">
+                                    <h6>
+                                        <a
+                                            asp-controller="products"
+                                            asp-action="details"
+                                            asp-route-id="@item.MaSanPham">
+                                            @item.TenSanPham
+                                        </a>
+                                    </h6>
+                                    <div class="product__price">@(item.GiaBan.Value.ToString("n0")) &#8363;</div>
+                                </div>
+                            </div>
+                        </div>
+                    }
+
+                    <div class="col-lg-12 text-center">
+                        @Html.PagedListPager(Model,page=>Url.Action("ProductType", new {
+                            page = page,
+                            target = ViewBag.target,
+                            targetName = ViewBag.targetName
+                        }),
+                        new X.PagedList.Web.Common.PagedListRenderOptions()
+                        {
+                            MaximumPageNumbersToDisplay = 5,
+                            PageClasses = new List<String> {"pagination__option"},
+                            UlElementClasses = new List<String> {"pagination pagination__center"},
+                            LiElementClasses = new List<String> {"pagination__option pagination__margin"},
+                            ActiveLiElementClass = "pagination__active",
+                        })
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+<!-- Shop Section End -->

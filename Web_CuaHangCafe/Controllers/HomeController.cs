@@ -2,7 +2,7 @@
 using Microsoft.EntityFrameworkCore;
 using System.Diagnostics;
 using Web_CuaHangCafe.Models;
-using Web_CuaHangCafe.MergeData;
+using Web_CuaHangCafe.ViewModels;
 using Web_CuaHangCafe.Data;
 
 namespace Web_CuaHangCafe.Controllers
@@ -20,7 +20,7 @@ namespace Web_CuaHangCafe.Controllers
 
         public IActionResult Index()
         {
-            MergeModel value = new MergeModel();
+            HomeViewModel value = new HomeViewModel();
             var lstProducts = _context.TbSanPhams.AsNoTracking().OrderBy(x => x.MaSanPham).Take(8).ToList();
             var lstNews = _context.TbTinTucs.AsNoTracking().OrderByDescending(x => x.NgayDang).Take(3).ToList();
             value.lstSanPham = lstProducts;

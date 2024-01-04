@@ -1,0 +1,40 @@
+﻿
+@{
+    ViewData["Title"] = "Thanh toán thành công";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<!-- Breadcrumb Begin -->
+<div class="breadcrumb-option">
+    <div class="container">
+        <div class="row">
+            <div class="col-lg-12">
+                <div class="breadcrumb__links">
+                    <a asp-controller="home" asp-action="index">
+                        <i class="fa-solid fa-house"></i>
+                        Trang chủ
+                    </a>
+                    <a asp-controller="cart" asp-action="index"> Giỏ hàng</a>
+                    <span>Thanh toán thành công</span>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+<!-- Breadcrumb End -->
+
+
+<section class="cart-success spad">
+    <div class="container">
+        <div class="row">
+            <div class="col-lg-12">
+                <div class="cart-success__detail">
+                    <h3>Thanh toán thành công</h3>
+                    <p>Trở về trang chủ trong <span id="countdownDisplay"></span> giây</p>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+
+<script src="~/js/main-additional-countdown.js"></script>

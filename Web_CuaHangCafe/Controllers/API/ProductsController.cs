@@ -1,4 +1,5 @@
 ﻿using Microsoft.AspNetCore.Mvc;
+using Microsoft.EntityFrameworkCore;
 using Web_CuaHangCafe.Data;
 using Web_CuaHangCafe.Models;
 
@@ -18,7 +19,22 @@ namespace Web_CuaHangCafe.Controllers.API
         [HttpGet]
         public IActionResult GetAll()
         {
-            return Ok(_context.TbSanPhams);
+            var products = (from product in _context.TbSanPhams
+                            join type in _context.TbNhomSanPhams on product.MaNhomSp equals type.MaNhomSp
+                            orderby product.MaSanPham
+                            select new
+                            {
+                                maSanPham = product.MaSanPham,
+                                tenSanPham = product.TenSanPham,
+                                nhomSanPham = type.TenNhomSp,
+                                giaBan = product.GiaBan,
+                                moTa = product.MoTa,
+                                hinhAnh = product.HinhAnh,
+                                ghiChu = product.GhiChu
+
+                            }).ToList();
+
+            return Ok(products);
         }
 
         [HttpGet("{id}")]
@@ -26,18 +42,35 @@ namespace Web_CuaHangCafe.Controllers.API
         {
             try
             {
-                var hangHoa = _context.TbSanPhams.SingleOrDefault(x => x.MaSanPham == id);
+                var product = (from p in _context.TbSanPhams
+                               join t in _context.TbNhomSanPhams on p.MaNhomSp equals t.MaNhomSp
+                               where p.MaSanPham == id
+                               orderby p.MaSanPham
+                               select new
+                               {
+                                   maSanPham = p.MaSanPham,
+                                   tenSanPham = p.TenSanPham,
+                                   nhomSanPham = t.TenNhomSp,
+                                   giaBan = p.GiaBan,
+                                   moTa = p.MoTa,
+                                   hinhAnh = p.HinhAnh,
+                                   ghiChu = p.GhiChu
 
-                if (hangHoa == null)
+                               }).ToList();
+
+
+                if (!product.Any())
                 {
                     return NotFound(404);
                 }
-
-                return Ok(new
+                else
                 {
-                    success = true,
-                    data = hangHoa
-                });
+                    return Ok(new
+                    {
+                        success = true,
+                        data = product
+                    });
+                }    
             }
             catch (Exception ex)
             {
@@ -46,59 +79,106 @@ namespace Web_CuaHangCafe.Controllers.API
         }
 
         [HttpPost]
-        public IActionResult Create(TbSanPham sanPham)
+        public IActionResult Create(AddProduct product)
         {
-            Random random = new Random();
-
-            var hangHoa = new TbSanPham
+            var _product = new TbSanPham
             {
-                MaSanPham= random.Next(),
-                TenSanPham = sanPham.TenSanPham,
-                GiaBan = sanPham.GiaBan,
-                MoTa = sanPham.MoTa,
-                HinhAnh = sanPham.HinhAnh,
-                GhiChu = sanPham.GhiChu,
-                MaNhomSp = sanPham.MaNhomSp
+                TenSanPham = product.TenSanPham,
+                MaNhomSp = product.MaNhomSp,
+                GiaBan = product.GiaBan,
+                MoTa = product.MoTa,
+                HinhAnh = product.HinhAnh,
+                GhiChu = product.GhiChu
             };
 
-            _context.TbSanPhams.Add(hangHoa);
+            _context.Add(_product);
+            _context.SaveChanges();
 
-            return Ok(new
-            {
-                Success = true,
-                Data = hangHoa
-            });
+            var lastProductId = _context.TbSanPhams
+                .OrderByDescending(p => p.MaSanPham)
+                .Select(p => p.MaSanPham)
+                .FirstOrDefault();
+
+            var lastProduct = (from p in _context.TbSanPhams
+                           join type in _context.TbNhomSanPhams on p.MaNhomSp equals type.MaNhomSp
+                           where p.MaSanPham == lastProductId
+                           orderby p.MaSanPham
+                           select new
+                           {
+                               maSanPham = p.MaSanPham,
+                               tenSanPham = p.TenSanPham,
+                               nhomSanPham = type.TenNhomSp,
+                               giaBan = p.GiaBan,
+                               moTa = p.MoTa,
+                               hinhAnh = p.HinhAnh,
+                               ghiChu = p.GhiChu
+
+                           }).ToList();
+
+            return CreatedAtAction(nameof(GetById), new { id = lastProductId }, lastProduct);
         }
 
         [HttpPut("{id}")]
-        public IActionResult Edit(int id, TbSanPham editHangHoa)
+        public IActionResult Edit(int id, AddProduct editProduct)
         {
             try
             {
-                var hangHoa = _context.TbSanPhams.SingleOrDefault(x => x.MaSanPham == id);
+                var product = _context.TbSanPhams.SingleOrDefault(x => x.MaSanPham == id);
 
-                if (hangHoa == null)
+                if (product == null)
                 {
                     return NotFound(404);
                 }
 
-                if (id != hangHoa.MaSanPham)
+                if (id != product.MaSanPham)
                 {
                     return BadRequest();
                 }
 
-                hangHoa.TenSanPham = editHangHoa.TenSanPham;
-                hangHoa.GiaBan = editHangHoa.GiaBan;
-                hangHoa.MoTa = editHangHoa.MoTa;
-                hangHoa.HinhAnh = editHangHoa.HinhAnh;
-                hangHoa.GhiChu = editHangHoa.GhiChu;
-                hangHoa.MaNhomSp = editHangHoa.MaNhomSp;
+                product.TenSanPham = editProduct.TenSanPham;
+                product.GiaBan = editProduct.GiaBan;
+                product.MoTa = editProduct.MoTa;
+                product.HinhAnh = editProduct.HinhAnh;
+                product.GhiChu = editProduct.GhiChu;
+                product.MaNhomSp = editProduct.MaNhomSp;
 
-                return Ok(new
+                _context.SaveChanges();
+
+                return NoContent();
+            }
+            catch (Exception ex)
+            {
+                return BadRequest(ex);
+            }
+        }
+
+        [HttpPatch("{id}")]
+        public IActionResult PartiallEdit(int id, AddProduct editProduct)
+        {
+            try
+            {
+                var product = _context.TbSanPhams.SingleOrDefault(x => x.MaSanPham == id);
+
+                if (product == null)
                 {
-                    success = true,
-                    data = hangHoa
-                });
+                    return NotFound(404);
+                }
+
+                if (id != product.MaSanPham)
+                {
+                    return BadRequest();
+                }
+
+                product.TenSanPham = editProduct.TenSanPham;
+                product.GiaBan = editProduct.GiaBan;
+                product.MoTa = editProduct.MoTa;
+                product.HinhAnh = editProduct.HinhAnh;
+                product.GhiChu = editProduct.GhiChu;
+                product.MaNhomSp = editProduct.MaNhomSp;
+
+                _context.SaveChanges();
+
+                return NoContent();
             }
             catch (Exception ex)
             {

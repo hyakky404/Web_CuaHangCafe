@@ -1,0 +1,84 @@
+﻿.cart-success {
+    padding-top: 80px;
+    padding-bottom: 80px;
+}
+
+    .cart-success .cart-success__detail {
+        height: 500px;
+    }
+
+        .cart-success .cart-success__detail h3,
+        .cart-success .cart-success__detail p {
+            text-align: center;
+        }
+
+.login-text-header {
+    text-align: center;
+}
+
+.login-btn {
+    margin: 20px 0;
+    width: 100%;
+}
+
+#btnTop {
+    display: inline-block;
+    background-color: #0d0d0d;
+    color: #ffffff;
+    width: 50px;
+    height: 50px;
+    text-align: center;
+    border-radius: 50%;
+    border: none;
+    position: fixed;
+    bottom: 30px;
+    right: 30px;
+    transition: background-color .3s, opacity .5s, visibility .5s;
+    opacity: 0;
+    visibility: hidden;
+    z-index: 1000;
+}
+
+    #btnTop:hover {
+    cursor: pointer;
+    background-color: #333;
+    }
+
+    #btnTop:active {
+    background-color: #555;
+    }
+
+    #btnTop.show {
+    opacity: 1;
+    visibility: visible;
+    }
+
+.pagination__option span {
+    display: inline-block;
+    height: 40px;
+    width: 40px;
+    border: 1px solid #f2f2f2;
+    border-radius: 50%;
+    font-size: 14px;
+    color: #111111;
+    font-weight: 600;
+    line-height: 40px;
+    text-align: center;
+    -webkit-transition: all, 0.3s;
+    -o-transition: all, 0.3s;
+    transition: all, 0.3s;
+}
+
+.pagination__active span {
+    background: #0d0d0d;
+    border-color: #0d0d0d;
+    color: #ffffff;
+}
+
+.pagination__center {
+    justify-content: center;
+}
+
+.pagination__margin {
+    margin-right: 6px;
+}

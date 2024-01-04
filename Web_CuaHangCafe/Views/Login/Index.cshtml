@@ -1,0 +1,46 @@
+﻿
+@{
+    ViewData["Title"] = "Đăng nhập";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<!-- Breadcrumb Begin -->
+<div class="breadcrumb-option">
+    <div class="container">
+        <div class="row">
+            <div class="col-lg-12">
+                <div class="breadcrumb__links">
+                    <a asp-controller="home" asp-action="index">
+                        <i class="fa-solid fa-house"></i>
+                        Trang chủ
+                    </a>
+                    <span>Đăng nhập</span>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+<!-- Breadcrumb End -->
+
+<section class="contact spad">
+    <div class="container">
+        <div class="row">
+            <div class="col-lg-6 col-md-6">
+                <div class="contact__content">
+                    <div class="contact__form">
+                        <h5 class="login-text-header">Đăng nhập</h5>
+                        <form>
+                            <input class="form-control" placeholder="Tên đăng nhập" />
+                            <input class="form-control" placeholder="Mật khẩu" />
+                            <a href="#">Quên mật khẩu?</a><br />
+                            <button type="submit" value="Create" class="site-btn login-btn">Đăng nhập</button>
+                        </form>
+                    </div>
+                </div>
+            </div>
+            <div class="col-lg-6 col-md-6">
+                <img src="~/img/blog/blog-2.jpg" style="width:100%;"/>
+            </div>
+        </div>
+    </div>
+</section>

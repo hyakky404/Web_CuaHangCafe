@@ -25,7 +25,7 @@ namespace Web_CuaHangCafe.Controllers
             return View(pagedListItem);
         }
 
-        public IActionResult ProductType(int target, string targetName, int? page)
+        public IActionResult Type(int target, string targetName, int? page)
         {
             int pageSize = 9;
             int pageNumber = page == null || page < 0 ? 1 : page.Value;

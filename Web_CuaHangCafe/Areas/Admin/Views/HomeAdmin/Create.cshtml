@@ -3,7 +3,6 @@
 
 @{
     ViewData["Title"] = "Thêm sản phẩm";
-    ViewData["ListProducts"] = "active";
     Layout = "~/Areas/Admin/Views/Shared/_LayoutAdmin.cshtml";
 }
 
@@ -21,6 +20,12 @@
 <div class="row">
     <div class="col-md-4">
         <form asp-action="Create" enctype="multipart/form-data">
+            <div class="col-lg-6">
+
+            </div>
+            <div class="col-lg-6">
+
+            </div>
             <div asp-validation-summary="ModelOnly" class="text-danger"></div>
             <div class="form-group">
                 <label class="control-label">Tên sản phẩm</label>
@@ -39,8 +44,9 @@
             </div>
             <div class="form-group">
                 <label class="control-label">Hình ảnh</label>
-                <input asp-for="HinhAnh" type="file" class="form-control" />
+                <input asp-for="HinhAnh" type="file" class="form-control" id="HinhAnh" onchange="previewImage()" />
                 <span asp-validation-for="HinhAnh" class="text-danger"></span>
+                <img id="imgPreview" style="width:100%;" />
             </div>
             <div class="form-group">
                 <label class="control-label">Ghi chú</label>
@@ -61,3 +67,22 @@
 <div>
     <a asp-action="index">Quay về</a>
 </div>
+
+<script type="text/javascript">
+    function previewImage() {
+        var fileInput = document.getElementById("HinhAnh");
+        var imgPreview = document.getElementById("imgPreview");
+
+        if (fileInput.files && fileInput.files[0]) {
+            var reader = new FileReader();
+
+            reader.onload = function (e) {
+                imgPreview.src = e.target.result;
+                imgPreview.style.display = "block";
+            };
+
+            reader.readAsDataURL(fileInput.files[0]);
+        }
+    }
+</script>
+

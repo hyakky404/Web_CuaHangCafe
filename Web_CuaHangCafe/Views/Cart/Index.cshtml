@@ -1,0 +1,115 @@
+﻿@model IEnumerable<CartItem>
+
+@{
+    ViewData["Title"] = "Giỏ hàng";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<!-- Breadcrumb Begin -->
+<div class="breadcrumb-option">
+    <div class="container">
+        <div class="row">
+            <div class="col-lg-12">
+                <div class="breadcrumb__links">
+                    <a asp-controller="home" asp-action="index">
+                        <i class="fa-solid fa-house"></i>
+                        Trang chủ
+                    </a>
+                    <span>Giỏ hàng</span>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+<!-- Breadcrumb End -->
+
+<!-- Shop Cart Section Begin -->
+<section class="shop-cart spad">
+    <div class="container">
+        <div class="row">
+            <div class="col-lg-12">
+                <div class="shop__cart__table">
+                    <table>
+                        <thead>
+                            <tr>
+                                <th>Sản phẩm</th>
+                                <th>Giá</th>
+                                <th>Số lượng</th>
+                                <th>Tổng</th>
+                                <th></th>
+                            </tr>
+                        </thead>
+                        <tbody id="cart-items">
+                            @if (ViewData["Message"] != null)
+                            {
+                                <tr>
+                                    <td>
+                                        <p id="cartMessage">@ViewData["Message"]</p>
+                                    </td>
+                                </tr>
+                            }
+
+                            @foreach (var item in Model)
+                            {
+                                <tr class="product-item" data-product-id="@item.MaSp">
+                                    <td class="cart__product__item">
+                                        <img src=@Url.Content("../img/products/" + item.AnhSp) alt="" style="width:70px;">
+                                        <div class="cart__product__item__title">
+                                            <h6>@item.TenSp</h6>
+                                        </div>
+                                    </td>
+                                    <td class="cart__price">@item.DonGia.Value.ToString("n0") &#8363</td>
+                                    <td class="cart__quantity">
+                                        <div class="pro-qty">
+                                            <input type="number" class="quantity-input" data-product-id="@item.MaSp" value="@item.SoLuong">
+                                        </div>
+                                    </td>
+                                    <td class="cart__total">@item.ThanhTien.Value.ToString("n0") &#8363</td>
+                                    <td class="cart__close">
+                                        <a @* asp-action="RemoveToCart" asp-route-id="@item.MaSp" *@ class="removeItem" data-product-id="@item.MaSp">
+                                            <span>
+                                                <i class="fa-solid fa-xmark"></i>
+                                            </span>
+                                        </a>
+                                    </td>
+                                </tr>
+                            }
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </div>
+        <div class="row">
+            <div class="col-lg-6 col-md-6 col-sm-6">
+                <div class="cart__btn">
+                    <a asp-controller="products" asp-action="index">
+                        <i class="fa-solid fa-arrow-left"></i>
+                        Tiếp tục mua hàng
+                    </a>
+                </div>
+            </div>
+            <div class="col-lg-6 col-md-6 col-sm-6">
+                <div class="cart__btn update__btn">
+                    <a href="#" id="updateCart">
+                        <span>
+                            <i class="fa-solid fa-rotate-right"></i>
+                        </span>
+                        Cập nhật giỏ hàng
+                    </a>
+                </div>
+            </div>
+        </div>
+        <div class="row">
+            <div class="col-lg-4 offset-lg-8">
+                <div class="cart__total__procced">
+                    <h6>Tổng tiền</h6>
+                    <ul>
+                        <li>Tổng <span id="totalAmount">@ViewData["total"] &#8363</span></li>
+                    </ul>
+                    <a asp-action="checkout" id="checkoutLink" class="primary-btn">Thanh toán</a>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+<!-- Shop Cart Section End -->

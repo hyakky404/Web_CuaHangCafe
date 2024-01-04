@@ -8,47 +8,16 @@
 @using X.PagedList.Mvc.Core
 @model X.PagedList.IPagedList<TbTinTuc>
 
-<!--CSS Begin-->
-<style>
-    .pagination__option span {
-        display: inline-block;
-        height: 40px;
-        width: 40px;
-        border: 1px solid #f2f2f2;
-        border-radius: 50%;
-        font-size: 14px;
-        color: #111111;
-        font-weight: 600;
-        line-height: 40px;
-        text-align: center;
-        -webkit-transition: all, 0.3s;
-        -o-transition: all, 0.3s;
-        transition: all, 0.3s;
-    }
-
-    .pagination__active span {
-        background: #0d0d0d;
-        border-color: #0d0d0d;
-        color: #ffffff;
-    }
-
-    .pagination__center {
-        justify-content: center;
-    }
-
-    .pagination__margin {
-        margin-right: 6px;
-    }
-</style>
-<!--CSS End-->
-
 <!-- Breadcrumb Begin -->
 <div class="breadcrumb-option">
     <div class="container">
         <div class="row">
             <div class="col-lg-12">
                 <div class="breadcrumb__links">
-                    <a asp-controller="Home" asp-action="Index"><i class="fa fa-home"></i> Trang chủ</a>
+                    <a asp-controller="Home" asp-action="Index">
+                        <i class="fa-solid fa-house"></i>
+                        Trang chủ
+                    </a>
                     <span>Tin tức</span>
                 </div>
             </div>
@@ -69,15 +38,25 @@
                             <ul>
                                 <li>@item.NgayDang.Value.ToString("dd/MM/yyyy")</li>
                             </ul>
-                            <h6><a asp-controller="news" asp-action="details" asp-route-maTinTuc="@item.MaTinTuc">@item.TieuDe</a></h6>
+                            <h6>
+                                <a
+                                    asp-controller="news"
+                                    asp-action="details"
+                                    asp-route-maTinTuc="@item.MaTinTuc">
+                                    @item.TieuDe</a>
+                                </h6>
                         </div>
                     </div>
                 </div>
             }
 
             <div class="col-lg-12 text-center">
-                @Html.PagedListPager(Model,page=>Url.Action("Index", new {page = page, target = ViewBag.target, targetname = ViewBag.targetname}), new X.PagedList.Web.Common.PagedListRenderOptions()
-                {
+                @Html.PagedListPager(Model,page=>Url.Action("Index", new {
+                    page = page,
+                    target = ViewBag.target,
+                    targetname = ViewBag.targetname
+                }),
+                new X.PagedList.Web.Common.PagedListRenderOptions() {
                     MaximumPageNumbersToDisplay = 5,
                     PageClasses = new List<String> {"pagination__option"},
                     UlElementClasses = new List<String> {"pagination pagination__center"},
@@ -89,4 +68,3 @@
     </div>
 </section>
 <!-- Blog Section End -->
-

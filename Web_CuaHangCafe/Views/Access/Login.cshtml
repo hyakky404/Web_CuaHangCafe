@@ -7,38 +7,42 @@
 <!DOCTYPE html>
 <html lang="vi">
 <head>
-    <!-- Required meta tags -->
     <meta charset="utf-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Đăng nhập | Trang quản trị THE SPACE COFFEE</title>
-
-    <!--Google Fonts-->
-    <link href="https://fonts.googleapis.com/css2?family=Cookie&display=swap" rel="stylesheet">
-    <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;500;600;700;800;900&display=swap" rel="stylesheet">
-
-    <!-- Layout styles -->
-    <link rel="stylesheet" href="~/css/style-admin.css" type="text/css">
-    <link rel="stylesheet" href="~/css/font-awesome.min.css" type="text/css">
-    <link rel="stylesheet" href="~/lib/bootstrap/dist/css/bootstrap.css" type="text/css" />
-    <!-- End layout styles -->
     <link rel="shortcut icon" href="~/favicon.ico" />
 
-    <style>
-        .admin__logo {
-            font-family: "Montserrat", sans-serif;
-            display: inline-block;
-            text-transform: uppercase;
-            font-size: 15px;
-            color: #000;
-            font-weight: 500;
-            user-select: none;
-            text-decoration: none;
-        }
+    <!--Font-->
+    <link rel="stylesheet" type="text/css" href="~/css/style-font.css">
 
-        .admin__logo:hover {
-            color: #000;
-        }
-    </style>
+    <!--Bootstrap-->
+    <link rel="stylesheet" href="~/lib/bootstrap/dist/css/bootstrap.min.css" type="text/css">
+    <link rel="stylesheet" href="~/lib/bootstrap/dist/css/bootstrap-grid.min.css" type="text/css">
+    <link rel="stylesheet" href="~/lib/bootstrap/dist/css/bootstrap-reboot.min.css" type="text/css">
+    <link rel="stylesheet" href="~/lib/bootstrap/dist/css/bootstrap-utilities.min.css" type="text/css">
+
+    <!--Font Awesome-->
+    <link rel="stylesheet" href="~/css/fontawesome.min.css" type="text/css">
+    <link rel="stylesheet" href="~/css/all.min.css" type="text/css">
+    <link rel="stylesheet" href="~/css/brands.min.css" type="text/css">
+    <link rel="stylesheet" href="~/css/regular.min.css" type="text/css">
+    <link rel="stylesheet" href="~/css/solid.min.css" type="text/css">
+    <link rel="stylesheet" href="~/css/svg-with-js.min.css" type="text/css">
+    <link rel="stylesheet" href="~/css/v4-font-face.min.css" type="text/css">
+    <link rel="stylesheet" href="~/css/v4-shims.min.css" type="text/css">
+    <link rel="stylesheet" href="~/css/v5-font-face.min.css" type="text/css">
+
+    <!--JQuery-->
+    <link rel="stylesheet" href="~/css/jquery-ui.min.css" type="text/css">
+    <link rel="stylesheet" href="~/css/magnific-popup.css" type="text/css">
+    <link rel="stylesheet" href="~/css/owl.carousel.min.css" type="text/css">
+    <link rel="stylesheet" href="~/css/owl.theme.default.min.css" type="text/css">
+    <link rel="stylesheet" href="~/css/owl.theme.green.min.css" type="text/css">
+    <link rel="stylesheet" href="~/css/slicknav.min.css" type="text/css">
+
+    <!--CSS-->
+    <link rel="stylesheet" href="~/css/style-admin.css" type="text/css">
+    <link rel="stylesheet" href="~/css/style-admin-additional.css" type="text/css">
 </head>
 <body>
     <div class="container-scroller">
@@ -48,11 +52,17 @@
                     <div class="col-lg-4 mx-auto">
                         <div class="auth-form-light text-left p-5">
                             <div class="brand-logo">
-                                <a class="admin__logo" asp-controller="home" asp-action="index"><i class="fa fa-coffee" aria-hidden="true" title="Thoát khỏi trang quản trị"></i> The Space Coffee</a>
+                                <a
+                                    asp-controller="home"
+                                    asp-action="index"
+                                    class="admin__logo"
+                                    title="Thoát khỏi trang quản trị">
+                                        <i class="fa-solid fa-mug-saucer"></i>
+                                        The Space Coffee
+                                </a>
                             </div>
                             <h6>Đăng nhập để tiếp tục</h6>
                             <h6 class="font-weight-light"></h6>
-
                             @using (Html.BeginForm("Login", "Access", FormMethod.Post))
                             {
                                 <div class="form-group">
@@ -65,7 +75,6 @@
                                     <button class="btn btn-block btn-gradient-primary btn-lg font-weight-medium auth-form-btn" type="submit">Đăng nhập</button>
                                 </div>
                             }
-
                         </div>
                     </div>
                 </div>
@@ -74,20 +83,23 @@
     </div>
 
     <!--JS Begin-->
-    <script>
-        function openNavbar() {
-            var x = document.getElementById("sidebar");
-            if (x.className === "sidebar sidebar-offcanvas") {
-                x.className += " active";
-            } else {
-                x.className = "sidebar sidebar-offcanvas";
-            }
-        }
-    </script>
-    <script src="../vendors/js/vendor.bundle.base.js"></script>
-    <script src="../js/off-canvas.js"></script>
-    <script src="../js/hoverable-collapse.js"></script>
-    <script src="../js/misc.js"></script>
+    <script src="~/lib/jquery/dist/jquery-3.7.1.min.js"></script>
+
+    <!--Bootstrap-->
+    <script src="~/lib/bootstrap/dist/js/bootstrap.min.js"></script>
+
+    <!--Font Awesome-->
+    <script src="~/js/fontawesome.js"></script>
+    <script src="~/js/all.min.js"></script>
+    <script src="~/js/brands.min.js"></script>
+    <script src="~/js/conflict-detection.min.js"></script>
+    <script src="~/js/regular.min.js"></script>
+    <script src="~/js/solid.min.js"></script>
+    <script src="~/js/v4-shims.min.js"></script>
+
+    <script src="~/js/off-canvas.js"></script>
+    <script src="~/js/hoverable-collapse.js"></script>
+    <script src="~/js/misc.js"></script>
     <!--JS End-->
 </body>
 </html>

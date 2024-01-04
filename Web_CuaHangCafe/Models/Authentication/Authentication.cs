@@ -11,8 +11,8 @@ namespace Web_CuaHangCafe.Models.Authentication
             {
                 context.Result = new RedirectToRouteResult(new RouteValueDictionary
                 {
-                    {"Controller", "Access" },
-                    {"Action", "Login" }
+                    {"controller", "access" },
+                    {"action", "login" }
                 });
             }
         }

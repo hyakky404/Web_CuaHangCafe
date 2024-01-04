@@ -1,0 +1,11 @@
+﻿<div class="search-model">
+    <div class="h-100 d-flex align-items-center justify-content-center">
+        <div class="search-close-switch">+</div>
+        @using (Html.BeginForm("Index", "Search", FormMethod.Get))
+        {
+            <div class="search-model-form">
+                <input type="text" id="search-input" name="search" placeholder="Tìm kiếm sản phẩm" autocomplete="off">
+            </div>
+        }
+    </div>
+</div>

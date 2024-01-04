@@ -8,47 +8,16 @@
 @using X.PagedList.Mvc.Core
 @model X.PagedList.IPagedList<TbSanPham>
 
-<!--CSS Begin-->
-<style>
-    .pagination__option span {
-        display: inline-block;
-        height: 40px;
-        width: 40px;
-        border: 1px solid #f2f2f2;
-        border-radius: 50%;
-        font-size: 14px;
-        color: #111111;
-        font-weight: 600;
-        line-height: 40px;
-        text-align: center;
-        -webkit-transition: all, 0.3s;
-        -o-transition: all, 0.3s;
-        transition: all, 0.3s;
-    }
-
-    .pagination__active span {
-        background: #0d0d0d;
-        border-color: #0d0d0d;
-        color: #ffffff;
-    }
-
-    .pagination__center {
-        justify-content: center;
-    }
-
-    .pagination__margin {
-        margin-right: 6px;
-    }
-</style>
-<!--CSS End-->
-
 <!-- Breadcrumb Begin -->
 <div class="breadcrumb-option">
     <div class="container">
         <div class="row">
             <div class="col-lg-12">
                 <div class="breadcrumb__links">
-                    <a asp-controller="Home" asp-action="Index"><i class="fa fa-home"></i> Trang chủ</a>
+                    <a asp-controller="home" asp-action="index">
+                        <i class="fa-solid fa-house"></i>
+                        Trang chủ
+                    </a>
                     <span>Tìm kiếm</span>
                 </div>
             </div>
@@ -63,7 +32,9 @@
         <div class="row">
             <div class="col-lg-12 col-md-12">
                 <div class="products-title">
-                    <h4>Kết quả tìm kiếm cho cụm từ: <span style="color: #666; text-transform: capitalize">@ViewBag.search</span></h4>
+                    <h4>Kết quả tìm kiếm cho cụm từ: 
+                        <span style="color: #666; text-transform: capitalize">@ViewBag.search</span>
+                    </h4>
                 </div>
 
                 <div class="row">
@@ -79,7 +50,14 @@
                                     </ul>
                                 </div>
                                 <div class="product__item__text">
-                                    <h6><a asp-controller="products" asp-action="details" asp-route-maSanPham="@item.MaSanPham">@item.TenSanPham</a></h6>
+                                    <h6>
+                                        <a
+                                            asp-controller="products"
+                                            asp-action="details"
+                                            asp-route-maSanPham="@item.MaSanPham">
+                                            @item.TenSanPham
+                                        </a>
+                                    </h6>
                                     <div class="product__price">@(item.GiaBan.Value.ToString("n0")) &#8363;</div>
                                 </div>
                             </div>
@@ -92,21 +70,22 @@
                     }
 
                     <div class="col-lg-12 text-center">
-                        @Html.PagedListPager(Model,page=>Url.Action("Index", new {page = page, search = ViewBag.search}), new X.PagedList.Web.Common.PagedListRenderOptions()
+                        @Html.PagedListPager(Model,page=>Url.Action("Index", new {
+                            page = page,
+                            search = ViewBag.search
+                        }),
+                        new X.PagedList.Web.Common.PagedListRenderOptions()
                         {
-                        MaximumPageNumbersToDisplay = 5,
-                        PageClasses = new List<String> {"pagination__option"},
-                        UlElementClasses = new List<String> {"pagination pagination__center"},
-                        LiElementClasses = new List<String> {"pagination__option pagination__margin"},
-                        ActiveLiElementClass = "pagination__active",
+                            MaximumPageNumbersToDisplay = 5,
+                            PageClasses = new List<String> {"pagination__option"},
+                            UlElementClasses = new List<String> {"pagination pagination__center"},
+                            LiElementClasses = new List<String> {"pagination__option pagination__margin"},
+                            ActiveLiElementClass = "pagination__active",
                         })
                     </div>
-
-
                 </div>
             </div>
         </div>
     </div>
 </section>
 <!-- Shop Section End -->
-

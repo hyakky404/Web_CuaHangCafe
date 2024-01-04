@@ -5,7 +5,7 @@
     Layout = "~/Views/Shared/_Layout.cshtml";
 }
 
-@model Web_CuaHangCafe.MergeData.MergeModel
+@model Web_CuaHangCafe.ViewModels.HomeViewModel
 
 <!--Categories Section Begin-->
 <section class="categories">
@@ -17,7 +17,7 @@
                     <div class="categories__text">
                         <h1>Thưởng thức cà phê</h1>
                         <p>Nơi cuộc hẹn tròn đầy với cà phê, món ăn nhẹ và không gian cảm hứng.</p>
-                        <a asp-controller="products" asp-action="index" asp-route-target="all" asp-route-targetname="Tất cả">Xem ngay</a>
+                        <a asp-controller="products" asp-action="index">Xem ngay</a>
                     </div>
                 </div>
             </div>
@@ -28,7 +28,13 @@
                             <div class="categories__text">
                                 <h4>Trà</h4>
                                 <p>Không chỉ có cà phê</p>
-                                <a asp-controller="products" asp-action="index" asp-route-target="TR" asp-route-targetname="Trà">Xem ngay</a>
+                                <a
+                                    asp-controller="products"
+                                    asp-action="type"
+                                    asp-route-target="5"
+                                    asp-route-targetname="Trà">
+                                    Xem ngay
+                                </a>
                             </div>
                         </div>
                     </div>
@@ -83,11 +89,33 @@
                     <div class="product__item">
                         <div class="product__item__pic set-bg" data-setbg=@Url.Content("../img/products/" + item.HinhAnh)>
                             <ul class="product__hover">
-                                <li><a href=@Url.Content("../img/products/" + item.HinhAnh) class="image-popup"><span class="arrow_expand"></span></a></li>
+                                <li>
+                                    <a href=@Url.Content("../img/products/" + item.HinhAnh) class="image-popup">
+                                        <span><i class="fa-solid fa-up-right-and-down-left-from-center"></i></span>
+                                    </a>
+                                </li>
+                                <li>
+                                    <a
+                                        asp-controller="cart"
+                                        asp-action="add"
+                                        asp-route-id="@item.MaSanPham"
+                                        asp-route-quantity=1>
+                                            <span>
+                                                <i class="fa-solid fa-cart-shopping"></i>
+                                            </span>
+                                    </a>
+                                </li>
                             </ul>
                         </div>
                         <div class="product__item__text">
-                            <h6><a asp-controller="products" asp-action="details" asp-route-id="@item.MaSanPham">@item.TenSanPham</a></h6>
+                            <h6>
+                                <a
+                                    asp-controller="products"
+                                    asp-action="details"
+                                    asp-route-id="@item.MaSanPham">
+                                    @item.TenSanPham
+                                </a>
+                            </h6>
                             <div class="product__price">@(item.GiaBan.Value.ToString("n0")) &#8363;</div>
                         </div>
                     </div>
@@ -108,7 +136,6 @@
                 </div>
             </div>
         </div>
-
         <div class="row">
             @foreach (var item in Model.lstTinTuc)
             {
@@ -119,7 +146,13 @@
                             <ul>
                                 <li>@item.NgayDang.Value.ToString("dd/MM/yyyy")</li>
                             </ul>
-                            <h6><a asp-controller="news" asp-action="details" asp-route-maTinTuc="@item.MaTinTuc">@item.TieuDe</a></h6>
+                            <h6>
+                                <a
+                                    asp-controller="news"
+                                    asp-action="details"
+                                    asp-route-maTinTuc="@item.MaTinTuc">@item.TieuDe
+                                </a>
+                            </h6>
                         </div>
                     </div>
                 </div>
@@ -162,4 +195,3 @@
     </div>
 </section>
 <!--Banner Section End-->
-

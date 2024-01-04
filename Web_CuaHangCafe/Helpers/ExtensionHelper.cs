@@ -5,11 +5,6 @@ namespace Web_CuaHangCafe.Helpers
 {
     public static class ExtensionHelper
     {
-        public static string ToVnd(this double giaTri)
-        {
-            return $"{giaTri:#,##0.00} đ";
-        }
-
         public static void Set<T>(this ISession session, string key, T value)
         {
             session.SetString(key, JsonSerializer.Serialize(value));
@@ -18,7 +13,28 @@ namespace Web_CuaHangCafe.Helpers
         public static T Get<T>(this ISession session, string key)
         {
             var value = session.GetString(key);
-            return value == null ? default : JsonSerializer.Deserialize<T>(value);
+
+            if (session == null)
+            {
+                // Xử lý tình huống phiên không tồn tại
+                return default;
+            }
+
+            if (string.IsNullOrEmpty(value))
+            {
+                // Xử lý tình huống chuỗi JSON trống
+                return default;
+            }
+
+            try
+            {
+                return JsonSerializer.Deserialize<T>(value);
+            }
+            catch (JsonException ex)
+            {
+                Console.WriteLine(ex.Message);
+                return default;
+            }
         }
     }
 }

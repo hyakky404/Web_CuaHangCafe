@@ -12,7 +12,10 @@
         <div class="row">
             <div class="col-lg-12">
                 <div class="breadcrumb__links">
-                    <a asp-controller="home" asp-action="index"><i class="fa fa-home"></i> Trang chủ</a>
+                    <a asp-controller="home" asp-action="index">
+                        <i class="fa-solid fa-house"></i>
+                        Trang chủ
+                    </a>
                     <a asp-controller="news" asp-action="index">Tin tức</a>
                     <span>@Html.DisplayFor(model => model.TieuDe)</span>
                 </div>
@@ -21,6 +24,7 @@
     </div>
 </div>
 <!-- Breadcrumb End -->
+
 <!-- Blog Details Section Begin -->
 <section class="blog-details spad">
     <div class="container">

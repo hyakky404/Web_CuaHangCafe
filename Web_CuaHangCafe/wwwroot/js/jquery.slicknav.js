@@ -1,3 +1,8 @@
+/*!
+ * SlickNav Responsive Mobile Menu v1.0.10
+ * (c) 2016 Josh Cope
+ * licensed under MIT
+ */
 ;(function ($, document, window) {
     var
     // default settings object.
@@ -28,7 +33,7 @@
             afterClose: function () {}
         },
         mobileMenu = 'slicknav',
-        prefix = 'slicknav',
+        prefix = 'slicknav';
 
         Keyboard = {
             DOWN: 40,

@@ -12,7 +12,10 @@
         <div class="row">
             <div class="col-lg-12">
                 <div class="breadcrumb__links">
-                    <a asp-controller="home" asp-action="index"><i class="fa fa-home"></i> Trang chủ</a>
+                    <a asp-controller="home" asp-action="index">
+                        <i class="fa-solid fa-house"></i>
+                        Trang chủ
+                    </a>
                     <span>Liên hệ</span>
                 </div>
             </div>
@@ -31,15 +34,24 @@
                         <h5>Thông tin liên hệ</h5>
                         <ul>
                             <li>
-                                <h6><i class="fa fa-map-marker"></i> Địa chỉ</h6>
+                                <h6>
+                                    <i class="fa-solid fa-location-arrow"></i>
+                                    Địa chỉ
+                                </h6>
                                 <p>Số 3 phố Cầu Giấy, P.Láng Thượng, Q.Đống Đa, Hà Nội</p>
                             </li>
                             <li>
-                                <h6><i class="fa fa-phone"></i> Điện thoại</h6>
+                                <h6>
+                                    <i class="fa-solid fa-phone"></i>
+                                    Điện thoại
+                                </h6>
                                 <p><span>(84.24) 37663311</span></p>
                             </li>
                             <li>
-                                <h6><i class="fa fa-headphones"></i> Hỗ trợ</h6>
+                                <h6>
+                                    <i class="fa-solid fa-envelope"></i>
+                                    Hỗ trợ
+                                </h6>
                                 <p>dhgtvt@utc.edu.vn</p>
                             </li>
                         </ul>
@@ -47,11 +59,30 @@
                     <div class="contact__form">
                         <h5>Gửi lời nhắn</h5>
                         <p class="@TempData["Status"]">@TempData["Message"]</p>
-                        <form asp-action="Index">
+                        <form asp-action="index">
                             <div asp-validation-summary="ModelOnly" class="text-danger"></div>
-                            <input asp-for="TieuDe" type="text" maxlength="50" class="form-control" placeholder="Tiêu đề" autocomplete="off" required />
-                            <input asp-for="SoDienThoai" type="tel" maxlength="10" class="form-control" placeholder="Số điện thoại" autocomplete="off" required />
-                            <textarea asp-for="NoiDung" class="form-control" placeholder="Lời nhắn" required></textarea>
+                            <input
+                                asp-for="TieuDe"
+                                type="text"
+                                class="form-control"
+                                maxlength="50"
+                                placeholder="Tiêu đề"
+                                autocomplete="off"
+                                required />
+                            <input
+                                asp-for="SoDienThoai"
+                                type="tel"
+                                class="form-control"
+                                maxlength="10"
+                                placeholder="Số điện thoại"
+                                autocomplete="off"
+                                required />
+                            <textarea
+                                asp-for="NoiDung"
+                                class="form-control"
+                                placeholder="Lời nhắn"
+                                required>
+                            </textarea>
                             <button type="submit" value="Create" class="site-btn">Gửi lời nhắn</button>
                         </form>
                     </div>
