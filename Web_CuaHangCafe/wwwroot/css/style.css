@@ -31,6 +31,11 @@
 /* Template default CSS
 /*----------------------------------------*/
 
+@font-face {
+    font-family: 'Montserrat';
+    src: url('/fonts/Montserrat/static/Montserrat-Medium.ttf') format('truetype');
+}
+
 html,
 body {
     height: 100%;
@@ -1068,8 +1073,9 @@ input[type=number] {
         position: absolute;
         right: -14px;
         top: 0;
-        content: "";
-        font-family: "FontAwesome";
+        font-family: "Font Awesome 5 Free";
+        font-weight: 900;
+        content: "\f105";
     }
 
     .breadcrumb__links a i {

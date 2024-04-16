@@ -8,7 +8,7 @@ public class ShoppingCartSummaryViewComponent : ViewComponent
 {
     public async Task<IViewComponentResult> InvokeAsync()
     {
-        var cartItems = HttpContext.Session.Get<List<CartItem>>("GioHang");
+        var cartItems = HttpContext.Session.Get<List<CartItem>>("Cart");
         var cartItemCount = (cartItems != null) ? cartItems.Count : 0;
 
         return View(cartItemCount);

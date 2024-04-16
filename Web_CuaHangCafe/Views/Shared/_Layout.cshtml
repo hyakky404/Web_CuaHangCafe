@@ -6,40 +6,70 @@
     <meta name="keywords" content="coffee, cafe">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>@ViewData["Title"] | THE SPACE COFFEE</title>
-    <link rel="shortcut icon" href="~/favicon.ico"/>
 
-    @await Html.PartialAsync("_PartialCSS")
+    <!--Favicon-->
+    <link rel="shortcut icon" href="~/favicon.ico" />
+
+    <!-- Icon Font Stylesheet -->
+
+    <!--Bootstrap-->
+    <link rel="stylesheet" href="~/lib/bootstrap/dist/css/bootstrap.min.css" type="text/css">
+
+    <!--Font Awesome-->
+    <link rel="stylesheet" href="~/lib/fontawesome/css/all.min.css" />
+
+    <!--JQuery-->
+    <link rel="stylesheet" href="~/lib/jquery-ui/jquery-ui.min.css" type="text/css">
+    <link rel="stylesheet" href="~/lib/magnific-popup/dist/magnific-popup.css" type="text/css">
+    <link rel="stylesheet" href="~/lib/owl-carousel-2/dist/assets/owl.carousel.min.css" type="text/css">
+    <link rel="stylesheet" href="~/lib/owl-carousel-2/dist/assets/owl.theme.default.min.css" type="text/css">
+    <link rel="stylesheet" href="~/lib/slick-nav/dist/slicknav.min.css" type="text/css">
+
+    <!--CSS-->
+    <link rel="stylesheet" href="~/css/style.css" type="text/css" asp-append-version="true">
+    <link rel="stylesheet" href="~/css/style-additional.css" type="text/css" asp-append-version="true">
+
 </head>
 <body>
     <!--Page Preloder-->
-    @await Html.PartialAsync("_PartialPreloader")
+    <partial name="_PreloaderPartial" />
 
-    <!--Header Section Begin-->
-    @await Html.PartialAsync("_PartialHeader")
-    <!--Header Section End-->
+    <!--Header Section-->
+    <partial name="_HeaderPartial" />
 
-    <!--Main Body Begin-->
+    <!--Main Body-->
     @RenderBody()
-    <!--Main Body End-->
 
-    <!--Instagram Begin-->
-    @await Html.PartialAsync("_PartialInstagram")
-    <!--Instagram End-->
+    <!--Instagram-->
+    <partial name="_InstagramPartial" />
 
-    <!--Footer Section Begin-->
-    @await Html.PartialAsync("_PartialFooter")
-    <!--Footer Section End-->
+    <!--Footer Section-->
+    <partial name="_FooterPartial" />
+    
+    <!--Search-->
+    <partial name="_PartialSearchBox" />
+    
+    <!--Back to top -->
+    <partial name="_BackToTopPartial" />
+    
+    <!-- JavaScript Libraries -->
+    <script src="~/lib/jquery/dist/jquery.min.js"></script>
+    <script src="~/lib/magnific-popup/dist/jquery.magnific-popup.min.js"></script>
+    <script src="~/lib/jquery-ui/jquery-ui.min.js"></script>
+    <script src="~/lib/mixitup/dist/mixitup.min.js"></script>
+    <script src="~/lib/jquery.countdown/jquery.countdown.min.js"></script>
+    <script src="~/lib/slick-nav/dist/jquery.slicknav.min.js"></script>
+    <script src="~/lib/owl-carousel-2/dist/owl.carousel.min.js"></script>
+    <script src="~/lib/jquery.nicescroll/dist/jquery.nicescroll.min.js"></script>
 
-    <!--Search Begin-->
-    @await Html.PartialAsync("_PartialSearchBox")
-    <!--Search End-->
+    <script src="~/lib/bootstrap/dist/js/bootstrap.min.js"></script>
 
-    <!--Back to top Begin-->
-    @await Html.PartialAsync("_PartialBackToTop")
-    <!--Back to top End-->
+    <script src="~/lib/fontawesome/js/all.min.js"></script>
 
-    <!--JavaScript Begin-->
-    @await Html.PartialAsync("_PartialJavaScript")
-    <!--JavaScript End-->
+    <!--Template Javascript-->
+    <script src="~/js/main.js" asp-append-version="true"></script>
+    <script src="~/js/main-additional.js" asp-append-version="true"></script>
+
+    @await RenderSectionAsync("Scripts", required: false)
 </body>
 </html>

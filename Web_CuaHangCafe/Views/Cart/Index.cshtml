@@ -12,7 +12,7 @@
             <div class="col-lg-12">
                 <div class="breadcrumb__links">
                     <a asp-controller="home" asp-action="index">
-                        <i class="fa-solid fa-house"></i>
+                        <i class="fas fa-home"></i>
                         Trang chủ
                     </a>
                     <span>Giỏ hàng</span>
@@ -68,7 +68,7 @@
                                     <td class="cart__close">
                                         <a @* asp-action="RemoveToCart" asp-route-id="@item.MaSp" *@ class="removeItem" data-product-id="@item.MaSp">
                                             <span>
-                                                <i class="fa-solid fa-xmark"></i>
+                                                <i class="fas fa-times"></i>
                                             </span>
                                         </a>
                                     </td>
@@ -83,7 +83,7 @@
             <div class="col-lg-6 col-md-6 col-sm-6">
                 <div class="cart__btn">
                     <a asp-controller="products" asp-action="index">
-                        <i class="fa-solid fa-arrow-left"></i>
+                        <i class="fas fa-arrow-left"></i>
                         Tiếp tục mua hàng
                     </a>
                 </div>
@@ -92,7 +92,7 @@
                 <div class="cart__btn update__btn">
                     <a href="#" id="updateCart">
                         <span>
-                            <i class="fa-solid fa-rotate-right"></i>
+                            <i class="fas fa-redo-alt"></i>
                         </span>
                         Cập nhật giỏ hàng
                     </a>

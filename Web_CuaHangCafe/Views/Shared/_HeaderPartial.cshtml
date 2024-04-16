@@ -1,0 +1,73 @@
+﻿ <!--Offcanvas Menu Begin-->
+<div class="offcanvas-menu-overlay"></div>
+
+<div class="offcanvas-menu-wrapper">
+    <div class="offcanvas__close">+</div>
+
+    <div class="offcanvas__logo">
+        <a asp-controller="home" asp-action="index">
+            <i class="fas fa-coffee"></i>
+            The Space Coffee
+        </a>
+    </div>
+
+    <ul class="offcanvas__widget">
+        <li>
+            <span class="search-switch">
+                <i class="fas fa-search"></i>
+            </span>
+        </li>
+        <li>
+            @await Component.InvokeAsync("ShoppingCartSummary")
+        </li>
+    </ul>
+
+    <div id="mobile-menu-wrap"></div>
+</div>
+<!--Offcanvas Menu End-->
+
+<header class="header fixed-top" id="header-navbar">
+    <div class="container-fluid">
+        <div class="row">
+            <div class="col-xl-3 col-lg-2">
+                <div class="header__logo">
+                    <a asp-controller="home" asp-action="index">
+                        <i class="fas fa-coffee"></i>
+                        The Space Coffee
+                    </a>
+                </div>
+            </div>
+
+            <div class="col-xl-6 col-lg-7">
+                <nav class="header__menu">
+                    <ul>
+                        <li class="@ViewData["Home"]"><a asp-controller="home" asp-action="index">Trang chủ</a></li>
+                        <li class="@ViewData["Products"]"><a asp-controller="products" asp-action="index">Sản phẩm</a></li>
+                        <li class="@ViewData["News"]"><a asp-controller="news" asp-action="index">Tin tức</a></li>
+                        <li class="@ViewData["About"]"><a asp-controller="about" asp-action="index">Giới thiệu</a></li>
+                        <li class="@ViewData["Contact"]"><a asp-controller="contact" asp-action="index">Liên hệ</a></li>
+                    </ul>
+                </nav>
+            </div>
+
+            <div class="col-lg-3">
+                <div class="header__right">
+                    <ul class="header__right__widget">
+                        <li>
+                            <span class="search-switch" title="Tìm kiếm"><i class="fas fa-search"></i></span>
+                        </li>
+                        <li>
+                            @await Component.InvokeAsync("ShoppingCartSummary")
+                        </li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+
+        <div class="canvas__open">
+            <i class="fas fa-bars"></i>
+        </div>
+    </div>
+</header>
+
+<div class="header__behind"></div>

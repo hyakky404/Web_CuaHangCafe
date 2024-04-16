@@ -1,8 +1,6 @@
-﻿
-@{
+﻿@{
     ViewData["Title"] = "Trang chủ";
     ViewData["Home"] = "active";
-    Layout = "~/Views/Shared/_Layout.cshtml";
 }
 
 @model Web_CuaHangCafe.ViewModels.HomeViewModel
@@ -91,7 +89,7 @@
                             <ul class="product__hover">
                                 <li>
                                     <a href=@Url.Content("../img/products/" + item.HinhAnh) class="image-popup">
-                                        <span><i class="fa-solid fa-up-right-and-down-left-from-center"></i></span>
+                                        <span><i class="fas fa-expand-alt"></i></span>
                                     </a>
                                 </li>
                                 <li>
@@ -101,7 +99,7 @@
                                         asp-route-id="@item.MaSanPham"
                                         asp-route-quantity=1>
                                             <span>
-                                                <i class="fa-solid fa-cart-shopping"></i>
+                                                <i class="fas fa-shopping-cart"></i>
                                             </span>
                                     </a>
                                 </li>

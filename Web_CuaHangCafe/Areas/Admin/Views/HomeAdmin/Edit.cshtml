@@ -1,5 +1,5 @@
-﻿@model Web_CuaHangCafe.ViewModels.CreateProductViewModel
-@addTagHelper *, Microsoft.AspNetCore.Mvc.TagHelpers
+﻿@addTagHelper *, Microsoft.AspNetCore.Mvc.TagHelpers
+@model Web_CuaHangCafe.Models.TbSanPham
 
 @{
     ViewData["Title"] = "Sửa thông tin sản phẩm";
@@ -49,8 +49,8 @@
             </div>
             <div class="form-group">
                 <label class="control-label">Loại sản phẩm</label>
-                <select asp-for="MaLoaiSanPham" class="form-control" asp-items="ViewBag.MaNhomSp"></select>
-                <span asp-validation-for="MaLoaiSanPham" class="text-danger"></span>
+                <select asp-for="MaNhomSp" class="form-control" asp-items="ViewBag.MaNhomSp"></select>
+                <span asp-validation-for="MaNhomSp" class="text-danger"></span>
             </div>
             <div class="form-group">
                 <input type="submit" value="Lưu" class="btn btn-primary" />

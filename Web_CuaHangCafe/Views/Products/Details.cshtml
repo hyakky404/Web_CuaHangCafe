@@ -1,10 +1,9 @@
-﻿@model Web_CuaHangCafe.Models.TbSanPham
-
-@{
+﻿@{
     ViewData["Title"] = @Html.DisplayFor(model => model.TenSanPham);
     ViewData["Products"] = "active";
-    Layout = "~/Views/Shared/_Layout.cshtml";
 }
+
+@model Web_CuaHangCafe.Models.TbSanPham
 
 <!--Breadcrumb Begin-->
 <div class="breadcrumb-option">
@@ -13,7 +12,7 @@
             <div class="col-lg-12">
                 <div class="breadcrumb__links">
                     <a asp-controller="home" asp-action="index">
-                        <i class="fa-solid fa-house"></i>
+                        <i class="fas fa-home"></i>
                         Trang chủ
                     </a>
                     <a asp-controller="Products" asp-action="Index">Sản phẩm </a>
@@ -50,15 +49,14 @@
                                     <input type="number" name="quantity" value="1">
                                 </div>
                             </div>
-                            <button
-                                asp-controller="cart"
-                                asp-action="add"
-                                asp-route-id="@Model.MaSanPham"
-                                class="cart-btn"
-                                type="submit">
-                                    <span>
-                                        <i class="fa-solid fa-cart-shopping"></i>
-                                    </span> Thêm vào giỏ
+                            <button asp-controller="cart"
+                                    asp-action="add"
+                                    asp-route-id="@Model.MaSanPham"
+                                    class="cart-btn"
+                                    type="submit">
+                                <span>
+                                    <i class="fa-solid fa-cart-shopping"></i>
+                                </span> Thêm vào giỏ
                             </button>
                         </div>
                     </form>
@@ -93,9 +91,6 @@
                         <li class="nav-item">
                             <a class="nav-link" data-bs-toggle="pill" href="#tabs-2" role="tab">Thông tin chi tiết</a>
                         </li>
-                        <li class="nav-item">
-                            <a class="nav-link" data-bs-toggle="pill" href="#tabs-3" role="tab">Đánh giá</a>
-                        </li>
                     </ul>
                     <div class="tab-content">
                         <div class="tab-pane fade show active" id="tabs-1" role="tabpanel">
@@ -106,12 +101,6 @@
                         </div>
                         <div class="tab-pane fade" id="tabs-2" role="tabpanel">
                             <h6>Thông tin chi tiết</h6>
-                            <p>
-                                Chưa có thông tin
-                            </p>
-                        </div>
-                        <div class="tab-pane fade" id="tabs-3" role="tabpanel">
-                            <h6>Đánh giá</h6>
                             <p>
                                 Chưa có thông tin
                             </p>

@@ -72,7 +72,7 @@
         </div>
     </div>
 
-    @Html.PagedListPager(Model, page=>Url.Action("Search", new {page = page}), new X.PagedList.Web.Common.PagedListRenderOptions()
+    @Html.PagedListPager(Model, page=>Url.Action("Search", new {page = page}), new PagedListRenderOptions()
     {
         MaximumPageNumbersToDisplay = 5,
         LiElementClasses = new List<String> {"page-item"},

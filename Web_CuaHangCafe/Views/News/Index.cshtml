@@ -1,6 +1,6 @@
 ﻿
 @{
-    ViewData["Title"] = "News";
+    ViewData["Title"] = "Tin tức";
     ViewData["News"] = "active";
     Layout = "~/Views/Shared/_Layout.cshtml";
 }
@@ -56,7 +56,7 @@
                     target = ViewBag.target,
                     targetname = ViewBag.targetname
                 }),
-                new X.PagedList.Web.Common.PagedListRenderOptions() {
+                new PagedListRenderOptions() {
                     MaximumPageNumbersToDisplay = 5,
                     PageClasses = new List<String> {"pagination__option"},
                     UlElementClasses = new List<String> {"pagination pagination__center"},

@@ -1,8 +1,6 @@
-﻿
-@{
+﻿@{
     ViewData["Title"] = "Sản phẩm";
     ViewData["Products"] = "active";
-    Layout = "~/Views/Shared/_Layout.cshtml";
 }
 
 @using Web_CuaHangCafe.Models
@@ -16,7 +14,7 @@
             <div class="col-lg-12">
                 <div class="breadcrumb__links">
                     <a asp-controller="home" asp-action="index">
-                        <i class="fa-solid fa-house"></i>
+                        <i class="fas fa-home"></i>
                         Trang chủ
                     </a>
                     <span>Sản phẩm</span>
@@ -55,7 +53,7 @@
                                     <ul class="product__hover">
                                         <li>
                                             <a href=@Url.Content("../img/products/" + item.HinhAnh) class="image-popup">
-                                                <i class="fa-solid fa-up-right-and-down-left-from-center"></i>
+                                                <i class="fas fa-expand-alt"></i>
                                             </a>
                                         </li>
                                         <li>
@@ -64,7 +62,7 @@
                                                 asp-action="add"
                                                 asp-route-id="@item.MaSanPham"
                                                 asp-route-quantity=1>
-                                                <i class="fa-solid fa-cart-shopping"></i>
+                                                <i class="fas fa-shopping-cart"></i>
                                             </a>
                                         </li>
                                     </ul>
@@ -90,7 +88,7 @@
                             target = ViewBag.target,
                             targetName = ViewBag.targetName
                         }),
-                        new X.PagedList.Web.Common.PagedListRenderOptions()
+                        new PagedListRenderOptions()
                         {
                             MaximumPageNumbersToDisplay = 5,
                             PageClasses = new List<String> {"pagination__option"},

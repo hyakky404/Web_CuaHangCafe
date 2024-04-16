@@ -14,39 +14,27 @@
 
     <!--Bootstrap-->
     <link rel="stylesheet" href="~/lib/bootstrap/dist/css/bootstrap.min.css" type="text/css">
-    <link rel="stylesheet" href="~/lib/bootstrap/dist/css/bootstrap-grid.min.css" type="text/css">
-    <link rel="stylesheet" href="~/lib/bootstrap/dist/css/bootstrap-reboot.min.css" type="text/css">
-    <link rel="stylesheet" href="~/lib/bootstrap/dist/css/bootstrap-utilities.min.css" type="text/css">
 
     <!--Font Awesome-->
-    <link rel="stylesheet" href="~/css/fontawesome.min.css" type="text/css">
-    <link rel="stylesheet" href="~/css/all.min.css" type="text/css">
-    <link rel="stylesheet" href="~/css/brands.min.css" type="text/css">
-    <link rel="stylesheet" href="~/css/regular.min.css" type="text/css">
-    <link rel="stylesheet" href="~/css/solid.min.css" type="text/css">
-    <link rel="stylesheet" href="~/css/svg-with-js.min.css" type="text/css">
-    <link rel="stylesheet" href="~/css/v4-font-face.min.css" type="text/css">
-    <link rel="stylesheet" href="~/css/v4-shims.min.css" type="text/css">
-    <link rel="stylesheet" href="~/css/v5-font-face.min.css" type="text/css">
+    <link rel="stylesheet" href="~/lib/fontawesome/css/all.min.css" type="text/css">
 
     <!--JQuery-->
-    <link rel="stylesheet" href="~/css/jquery-ui.min.css" type="text/css">
-    <link rel="stylesheet" href="~/css/magnific-popup.css" type="text/css">
-    <link rel="stylesheet" href="~/css/owl.carousel.min.css" type="text/css">
-    <link rel="stylesheet" href="~/css/owl.theme.default.min.css" type="text/css">
-    <link rel="stylesheet" href="~/css/owl.theme.green.min.css" type="text/css">
-    <link rel="stylesheet" href="~/css/slicknav.min.css" type="text/css">
+    <link rel="stylesheet" href="~/lib/jquery-ui/jquery-ui.min.css" type="text/css">
+    <link rel="stylesheet" href="~/lib/magnific-popup/dist/magnific-popup.css" type="text/css">
+    <link rel="stylesheet" href="~/lib/owl-carousel-2/dist/assets/owl.carousel.min.css" type="text/css">
+    <link rel="stylesheet" href="~/lib/owl-carousel-2/dist/assets/owl.theme.default.min.css" type="text/css">
+    <link rel="stylesheet" href="~/lib/slick-nav/dist/slicknav.min.css" type="text/css">
 
     <!--CSS-->
-    <link rel="stylesheet" href="~/css/style-admin.css" type="text/css">
-    <link rel="stylesheet" href="~/css/style-admin-additional.css" type="text/css">
+    <link rel="stylesheet" href="~/css/style-admin.css" type="text/css" asp-append-version="true">
+    <link rel="stylesheet" href="~/css/style-admin-additional.css" type="text/css" asp-append-version="true">
 </head>
 <body>
     <div class="container-scroller">
         <nav class="navbar default-layout-navbar col-lg-12 col-12 p-0 fixed-top d-flex flex-row">
             <div class="text-center navbar-brand-wrapper d-flex align-items-center justify-content-center">
                 <a asp-controller="homeadmin" asp-action="index" class="admin__logo">
-                    <i class="fa-solid fa-mug-saucer"></i>
+                    <i class="fas fa-coffee"></i>
                     | Admin
                 </a>
             </div>
@@ -54,13 +42,13 @@
                 <ul class="navbar-nav navbar-nav-right">
                     <li class="nav-item nav-item-logout">
                         <a asp-controller="access" asp-action="logout" class="nav-link">
-                            <i class="fa-solid fa-arrow-right-from-bracket"></i>
+                            <i class="fas fa-sign-out-alt"></i>
                             <span class="menu-title" style="padding-left:10px;">Đăng xuất</span>
                         </a>
                     </li>
                 </ul>
                 <button class="navbar-toggler navbar-toggler-right d-lg-none align-self-center" onclick="openNavbar()">
-                    <i class="fa-solid fa-bars"></i>
+                    <i class="fas fa-bars"></i>
                 </button>
             </div>
         </nav>
@@ -70,49 +58,49 @@
                 <ul class="nav nav-bar-fixed">
                     <li class="nav-item">
                         <a asp-controller="HomeAdmin" asp-action="Index" class="nav-link">
-                            <i class="fa-solid fa-list"></i>
+                            <i class="fas fa-list-ul"></i>
                             <span class="menu-title">Quản lí sản phẩm</span>
                         </a>
                     </li>
                     <li class="nav-item">
                         <a asp-controller="GroupsProduct" asp-action="Index" class="nav-link">
-                            <i class="fa-solid fa-table"></i>
+                            <i class="fas fa-table"></i>
                             <span class="menu-title">Quản lí nhóm sản phẩm</span>
                         </a>
                     </li>
                     <li class="nav-item">
                         <a asp-controller="Bill" asp-action="Index" class="nav-link">
-                            <i class="fa-solid fa-file-invoice"></i>
+                            <i class="fas fa-file-invoice"></i>
                             <span class="menu-title">Quản lí hoá đơn</span>
                         </a>
                     </li>
                     <li class="nav-item">
                         <a asp-controller="Clients" asp-action="Index" class="nav-link">
-                            <i class="fa-solid fa-user"></i>
+                            <i class="fas fa-user"></i>
                             <span class="menu-title">Quản lí khách hàng</span>
                         </a>
                     </li>
                     <li class="nav-item">
                         <a asp-controller="NewsManage" asp-action="Index" class="nav-link">
-                            <i class="fa-solid fa-newspaper"></i>
+                            <i class="fas fa-newspaper"></i>
                             <span class="menu-title">Quản lí bài viết</span>
                         </a>
                     </li>
                     <li class="nav-item">
                         <a asp-controller="Feedback" asp-action="Index" class="nav-link">
-                            <i class="fa-solid fa-comment"></i>
+                            <i class="fas fa-comments"></i>
                             <span class="menu-title">Tiếp nhận phản hồi</span>
                         </a>
                     </li>
                     <li class="nav-item">
                         <a asp-controller="Accounts" asp-action="Index" class="nav-link">
-                            <i class="fa-solid fa-lock"></i>
+                            <i class="fas fa-lock"></i>
                             <span class="menu-title">Quản lí tài khoản truy cập</span>
                         </a>
                     </li>
                     <li class="nav-item">
                         <a asp-controller="Access" asp-action="Logout" class="nav-link">
-                            <i class="fa-solid fa-arrow-right-from-bracket"></i>
+                            <i class="fas fa-sign-out-alt"></i>
                             <span class="menu-title">Đăng xuất</span>
                         </a>
                     </li>
@@ -142,24 +130,18 @@
     <!-- container-scroller -->
 
     <!--JS Begin-->
-    <script src="~/lib/jquery/dist/jquery-3.7.1.min.js"></script>
+    <script src="~/lib/jquery/dist/jquery.min.js"></script>
 
     <!--Bootstrap-->
     <script src="~/lib/bootstrap/dist/js/bootstrap.min.js"></script>
 
     <!--Font Awesome-->
-    <script src="~/js/fontawesome.js"></script>
-    <script src="~/js/all.min.js"></script>
-    <script src="~/js/brands.min.js"></script>
-    <script src="~/js/conflict-detection.min.js"></script>
-    <script src="~/js/regular.min.js"></script>
-    <script src="~/js/solid.min.js"></script>
-    <script src="~/js/v4-shims.min.js"></script>
+    <script src="~/lib/fontawesome/js/all.min.js"></script>
 
     <script src="~/js/off-canvas.js"></script>
     <script src="~/js/hoverable-collapse.js"></script>
     <script src="~/js/misc.js"></script>
-    <script src="~/js/main-admin.js"></script>
-    <script src="~/js/main-admin-additional.js"></script>
+    <script src="~/js/main-admin.js" asp-append-version="true"></script>
+    <script src="~/js/main-admin-additional.js" asp-append-version="true"></script>
 </body>
 </html>
