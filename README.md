@@ -4,7 +4,7 @@ Bài tập lớn môn Thực tập chuyên môn
 ## Mô tả
 Trang web quản lí cửa hàng và là bài tập lớn để đánh giá quá trình học tập của môn học.
 
-Trang web được xây dựng bằng ASP.NET Core Web App (MVC) phiên bản .NET 8 và SQL Server 2022 của Microsoft.
+Trang web được xây dựng bằng công nghệ ASP.NET Core phiên bản .NET 8 với mô hình MVC và công nghệ SQL Server.
 
 Các mục lớn của trang web
   
