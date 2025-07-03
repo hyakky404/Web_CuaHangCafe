@@ -1,8 +1,8 @@
-﻿using Microsoft.AspNetCore.Mvc;
+﻿using Web_CuaHangCafe.Data;
+using Web_CuaHangCafe.Models;
 using System.Security.Cryptography;
 using System.Text;
-using Web_CuaHangCafe.Data;
-using Web_CuaHangCafe.Models;
+using Microsoft.AspNetCore.Mvc;
 
 namespace Web_CuaHangCafe.Controllers
 {
@@ -27,6 +27,7 @@ namespace Web_CuaHangCafe.Controllers
 
                 // Convert the byte array to a hexadecimal string
                 StringBuilder builder = new StringBuilder();
+
                 for (int i = 0; i < hashBytes.Length; i++)
                 {
                     builder.Append(hashBytes[i].ToString("x2"));

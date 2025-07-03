@@ -1,9 +1,9 @@
-﻿using Microsoft.AspNetCore.Mvc;
-using Microsoft.EntityFrameworkCore;
-using System.Diagnostics;
-using Web_CuaHangCafe.Models;
+﻿using Web_CuaHangCafe.Models;
 using Web_CuaHangCafe.ViewModels;
 using Web_CuaHangCafe.Data;
+using System.Diagnostics;
+using Microsoft.AspNetCore.Mvc;
+using Microsoft.EntityFrameworkCore;
 
 namespace Web_CuaHangCafe.Controllers
 {

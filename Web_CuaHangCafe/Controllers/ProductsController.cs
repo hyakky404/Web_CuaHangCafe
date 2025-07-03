@@ -1,8 +1,8 @@
-﻿using Microsoft.AspNetCore.Mvc;
-using Microsoft.EntityFrameworkCore;
+﻿using Web_CuaHangCafe.Data;
 using Web_CuaHangCafe.Models;
+using Microsoft.AspNetCore.Mvc;
+using Microsoft.EntityFrameworkCore;
 using X.PagedList;
-using Web_CuaHangCafe.Data;
 
 namespace Web_CuaHangCafe.Controllers
 {

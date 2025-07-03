@@ -1,6 +1,6 @@
-﻿using Microsoft.AspNetCore.Mvc;
-using Web_CuaHangCafe.Data;
+﻿using Web_CuaHangCafe.Data;
 using Web_CuaHangCafe.Models;
+using Microsoft.AspNetCore.Mvc;
 
 namespace Web_CuaHangCafe.Controllers
 {

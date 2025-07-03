@@ -1,6 +1,6 @@
-using Microsoft.EntityFrameworkCore;
 using Web_CuaHangCafe.Data;
 using Web_CuaHangCafe.Repository;
+using Microsoft.EntityFrameworkCore;
 
 var builder = WebApplication.CreateBuilder(args);
 
